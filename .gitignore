@@ -1,0 +1,5 @@
+*.d
+*.o
+*.ppm
+source/.vscode/*
+swpathtracer
