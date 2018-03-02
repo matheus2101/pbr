@@ -12,7 +12,7 @@ Matheus Araújo da Silva
 
 ## Prática 2: Triângulo
 
-Algorítmo de cálculo de intersecção entre triângulos utilizado: *Fast, Minimum Storage Ray/Triangle Intersection (Möller, T.; Trumbore, B.)*
+Algorítmo de cálculo de intersecção entre triângulos utilizado: [*Fast, Minimum Storage Ray/Triangle Intersection (Möller, T.; Trumbore, B.)*](https://cadxfem.org/inf/Fast%20MinimumStorage%20RayTriangle%20Intersection.pdf)
 
-Imagem exemplo com dois triângulos coloridos na resolução 512x512
+Imagem exemplo com dois triângulos coloridos na resolução 512x512:
 ![Exemplo](https://raw.githubusercontent.com/matheus2101/pbr/master/exercises/triangles.png)
