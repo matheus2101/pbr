@@ -1,11 +1,11 @@
-Repositório com as atividades práticas da disciplina Physics Based Rendering.
-
 ## Dupla
 
 Davysson da Silva Pimentel</br>
 Matheus Araújo da Silva
 
 ## Código fonte
+
+Baseado no template por: (https://github.com/capagot/rt-template)
 
 [C++](https://github.com/matheus2101/pbr/tree/master/source)</br>
 [Rust](https://github.com/Davysson0/photon-rs)
