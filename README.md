@@ -3,6 +3,10 @@
 Davysson da Silva Pimentel</br>
 Matheus Araújo da Silva
 
+## Mitsuba
+
+Mitsuba usado para testes e comparação de resultados
+
 ## Código fonte
 
 Baseado no template por: (https://github.com/capagot/rt-template)
