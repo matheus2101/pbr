@@ -13,7 +13,7 @@ public:
     Sphere( void );
 
     Sphere( const glm::vec3 &center,
-            float radius );
+            float radius, const glm::vec3 color);
 
     bool intersect( const Ray &ray,
                     IntersectionRecord &intersection_record ) const;
@@ -21,6 +21,8 @@ public:
     glm::vec3 center_ = { 0.0f, 0.0f, 0.0f };
 
     float radius_= 1.0f;
+
+    glm::vec3 v0_, v1_, v2_, color_;
 
 private:
 
