@@ -16,7 +16,7 @@ public:
     bool intersect( const Ray &ray,
                     IntersectionRecord &intersection_record ) const;
 
-    glm::vec3 v0_, v1_, v2_, color_;
+    glm::vec3 v0_, v1_, v2_;
 };
 
 #endif

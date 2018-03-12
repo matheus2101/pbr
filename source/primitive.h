@@ -14,10 +14,16 @@ public:
 
     Primitive( void );
 
+    Primitive( glm::vec3 color );
+
+    void setColor( glm::vec3 color );
+
     virtual ~Primitive( void );
 
     virtual bool intersect( const Ray &ray,
                             IntersectionRecord &intersection_record ) const = 0;
+
+    glm::vec3 color_;
 };
 
 #endif /* PRIMITIVE_H_ */

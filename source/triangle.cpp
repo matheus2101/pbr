@@ -2,7 +2,9 @@
 #define EPSILON 0.000001
 
 Triangle::Triangle(const glm::vec3 v0, const glm::vec3 v1,
- const glm::vec3 v2, const glm::vec3 color) : v0_{v0}, v1_{v1}, v2_{v2}, color_{color}
+ const glm::vec3 v2, const glm::vec3 color):
+     v0_{v0}, v1_{v1}, v2_{v2}, 
+     Primitive::Primitive{color}
  {}
 
 bool Triangle::intersect( const Ray &ray,
@@ -48,7 +50,7 @@ bool Triangle::intersect( const Ray &ray,
     intersection_record.position_ = glm::vec3{t, u, v};
     intersection_record.normal_ = glm::normalize(glm::cross(v2_ - v0_, v1_ - v0_));
     intersection_record.t_ = (intersection_record.position_ - ray.origin_)[0] / (ray.direction_ - ray.origin_)[0];
-    intersection_record.color_ = this->color_;
+    intersection_record.color_ = color_;
 
     return true;
 }
