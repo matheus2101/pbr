@@ -27,10 +27,9 @@ Ray PinholeCamera::getWorldSpaceRay( const glm::vec2 &pixel_coord ) const
     float height = max_y_ - min_y_;
 
     glm::vec3 s{ min_x_ + (width * ((pixel_coord[0] + 0.5f) / resolution_[0])),
-                 min_y_ + (height * ((pixel_coord[1] + 0.5f) / resolution_[1])),
-                 -1.0f};
+                (min_y_ + (height * ((pixel_coord[1] + 0.5f) / resolution_[1]))) * -1,
+                -1.0f};
 
-    return Ray{ position_, 
-                glm::normalize( s - position_) };
+    return Ray{ s, glm::normalize( s - position_ )};
 }
 
