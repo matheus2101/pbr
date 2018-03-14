@@ -22,5 +22,5 @@ Imagem exemplo com dois triângulos coloridos na resolução 512x512:
 
 ## Prática 3: Câmera pinhole e ASSIMP
 
-Resultado da câmera pinhole usando as esferas:
+Resultado da câmera pinhole usando as esferas:</br>
 ![Exemplo](https://raw.githubusercontent.com/matheus2101/pbr/master/exercises/pinhole.png)
