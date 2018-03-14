@@ -25,5 +25,9 @@ Imagem exemplo com dois triângulos coloridos na resolução 512x512:
 Resultado da câmera pinhole usando as esferas:</br>
 ![Exemplo](https://raw.githubusercontent.com/matheus2101/pbr/master/exercises/pinhole.png)
 
+Camera ortogonal com posição arbitrária:</br>
+![Exemplo](https://raw.githubusercontent.com/matheus2101/pbr/master/exercises/arbitrary_orthogonal.png)
+
+
 Camera pinhole com posição arbitrária:</br>
 ![Exemplo](https://raw.githubusercontent.com/matheus2101/pbr/master/exercises/arbitrary.png)

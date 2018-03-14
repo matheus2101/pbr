@@ -1,0 +1,23 @@
+{
+    "files.associations": {
+        "cctype": "cpp",
+        "clocale": "cpp",
+        "cmath": "cpp",
+        "cstdarg": "cpp",
+        "cstddef": "cpp",
+        "cstdio": "cpp",
+        "cstdlib": "cpp",
+        "cstring": "cpp",
+        "cwchar": "cpp",
+        "atomic": "cpp",
+        "*.tcc": "cpp",
+        "cstdint": "cpp",
+        "exception": "cpp",
+        "slist": "cpp",
+        "initializer_list": "cpp",
+        "iosfwd": "cpp",
+        "stdexcept": "cpp",
+        "system_error": "cpp",
+        "typeinfo": "cpp"
+    }
+}
