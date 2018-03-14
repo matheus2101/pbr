@@ -13,7 +13,7 @@ Camera::Camera( const glm::ivec2 &resolution,
         position_{ position },
         direction_{ glm::normalize( look_at - position ) }
 {
-    // Sets up the camera's ONB.
+    // Arbitrary basis
     onb_.setFromUW( glm::normalize( glm::cross( up_, -direction_ ) ), -direction_ );
 }
 
