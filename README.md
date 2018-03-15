@@ -26,7 +26,7 @@ Resultado da câmera pinhole usando as esferas:</br>
 ![Exemplo](https://raw.githubusercontent.com/matheus2101/pbr/master/exercises/pinhole.png)
 
 Camera ortogonal com posição arbitrária:</br>
-![Exemplo](https://raw.githubusercontent.com/matheus2101/pbr/master/exercises/arbitrary_orthogonal.png)
+![Exemplo](https://raw.githubusercontent.com/matheus2101/pbr/master/exercises/arbitrary_ortho.png)
 
 Camera pinhole com posição arbitrária:</br>
 ![Exemplo](https://raw.githubusercontent.com/matheus2101/pbr/master/exercises/arbitrary.png)
