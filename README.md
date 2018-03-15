@@ -28,6 +28,8 @@ Resultado da câmera pinhole usando as esferas:</br>
 Camera ortogonal com posição arbitrária:</br>
 ![Exemplo](https://raw.githubusercontent.com/matheus2101/pbr/master/exercises/arbitrary_orthogonal.png)
 
-
 Camera pinhole com posição arbitrária:</br>
 ![Exemplo](https://raw.githubusercontent.com/matheus2101/pbr/master/exercises/arbitrary.png)
+
+.obj carregado com ASSIMP (câmera ortogonal)</br>
+![Exemplo](https://raw.githubusercontent.com/matheus2101/pbr/master/exercises/monkey.png)

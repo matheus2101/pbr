@@ -1,5 +1,5 @@
 #include "triangle.h"
-#define EPSILON 0.000001
+#define EPSILON 0.000001f
 
 Triangle::Triangle(const glm::vec3 v0, const glm::vec3 v1,
  const glm::vec3 v2, const glm::vec3 color): 
@@ -9,7 +9,7 @@ bool Triangle::intersect( const Ray &ray,
                     IntersectionRecord &intersection_record ) const
 {
     glm::vec3 edge1, edge2, tvec, pvec, qvec;
-    double det, t, u, v;
+    float det, inv_det, t, u, v;
 
     /* find vectors for two edges sharing vert0*/
     edge1 = v1_ - v0_;
@@ -29,26 +29,27 @@ bool Triangle::intersect( const Ray &ray,
 
     /* calculate U parameter and test bounds */
     u = glm::dot(tvec, pvec);
-    if (u < 0.0 || u > det) return false;
+    if ((u < 0.0f) || (u > det)) return false;
 
     /* prepare to test V parameter */
     qvec = glm::cross(tvec,edge1);
 
     /* calculate V parameter and test bounds */
     v = glm::dot(ray.direction_, qvec);
-    if (v < 0.0 || u + v > det) return false;
+    if ((v < 0.0f) || ((u + v) > det)) return false;
 
     /* calculate t, scale parameters, ray intersects triangle */
     t = glm::dot(edge2, qvec);
-    t *= 1.0 / det;
-    u *= 1.0 / det;
-    v *= 1.0 / det;
+    inv_det = 1.0f / det;
+    t *= inv_det;
+    u *= inv_det;
+    v *= inv_det;
 
-    /* set the intersection record */
-    intersection_record.position_ = glm::vec3{t, u, v};
     intersection_record.normal_ = glm::normalize(glm::cross(v2_ - v0_, v1_ - v0_));
-    intersection_record.t_ = (intersection_record.position_ - ray.origin_)[0] / (ray.direction_ - ray.origin_)[0];
     intersection_record.color_ = color_;
+    intersection_record.t_ = t;
+    intersection_record.position_ = ray.origin_ + ray.direction_ * t;
+
 
     return true;
 }

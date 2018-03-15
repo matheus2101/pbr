@@ -1,4 +1,5 @@
 #include "raytracer.h"
+unsigned counter = 0;
 
 RayTracer::RayTracer( Camera &camera,
                       const Scene &scene,
@@ -35,12 +36,14 @@ void RayTracer::integrate( void )
 
             Ray ray{ camera_.getWorldSpaceRay( glm::vec2{ x + 0.5f, y + 0.5f } ) };
 
-            if ( scene_.intersect( ray, intersection_record ) )
+            if ( scene_.intersect( ray, intersection_record ) ) {
                 buffer_.buffer_data_[x][y] = intersection_record.color_;
-                // buffer_.buffer_data_[x][y] = glm::vec3{ intersection_record.t_ * 0.2f };
+                counter++;
+            }
         }
     }
 
     std::clog << std::endl;
+    std::cout << counter << " intersections" << std::endl;
 }
 

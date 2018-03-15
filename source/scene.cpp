@@ -40,11 +40,11 @@ void Scene::load(void)
     // primitives_.push_back( Primitive::PrimitiveUniquePtr( new Sphere{ glm::vec3{  0.5f,-0.5f, -0.5f }, glm::vec3{1.0f, 1.0f, 1.0f}, 0.2f } ) );
     // primitives_.push_back( Primitive::PrimitiveUniquePtr( new Sphere{ glm::vec3{ -0.5f,-0.5f, -0.5f }, glm::vec3{0.5f, 0.5f, 0.5f}, 0.2f } ) );
 
-    //primitives_.push_back( Primitive::PrimitiveUniquePtr( new Triangle(glm::vec3{  0.0f, 0.0f,  0.0f },
-    //glm::vec3{ -0.5f, 0.0f, 0.0f }, glm::vec3{  0.0f,-0.5f, 0.0f}, glm::vec3{0.0f, 0.0f, 1.0f})));
+    // primitives_.push_back( Primitive::PrimitiveUniquePtr( new Triangle(glm::vec3{  0.5f, 0.5f,  0.0f },
+    // glm::vec3{ -1.25f, 0.0f, 0.0f }, glm::vec3{  0.0f,-1.25f, 0.0f}, glm::vec3{0.0f, 0.0f, 1.0f})));
 
     // primitives_.push_back( Primitive::PrimitiveUniquePtr( new Triangle(glm::vec3{  0.0f, 0.0f,  0.0f },
-    // glm::vec3{ 0.5f, 0.0f, 0.0f }, glm::vec3{  0.0f,0.5f, 0.0f}, glm::vec3{0.0f, 1.0f, 0.0f})));
+    // glm::vec3{ 0.5f, 0.0f, 0.0f }, glm::vec3{  0.0f,0.5f, 0.0f}, glm::vec3{1.0f, 0.0f, 0.0f})));
 
     Assimp::Importer importer;
 
