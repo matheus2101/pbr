@@ -31,7 +31,7 @@ bool Scene::intersect(const Ray &ray,
 
 void Scene::load(void)
 {
-    primitives_.push_back( Primitive::PrimitiveUniquePtr( new Sphere{ glm::vec3{  0.5f, 0.5f,  0.0f }, glm::vec3{1.0f, 0.0f, 0.0f}, 0.2f } ) );
+    /*primitives_.push_back( Primitive::PrimitiveUniquePtr( new Sphere{ glm::vec3{  0.5f, 0.5f,  0.0f }, glm::vec3{1.0f, 0.0f, 0.0f}, 0.2f } ) );
     primitives_.push_back( Primitive::PrimitiveUniquePtr( new Sphere{ glm::vec3{ -0.5f, 0.5f,  0.0f }, glm::vec3{0.0f, 1.0f, 0.0f}, 0.2f } ) );
     primitives_.push_back( Primitive::PrimitiveUniquePtr( new Sphere{ glm::vec3{  0.5f,-0.5f,  0.0f }, glm::vec3{0.0f, 0.0f, 1.0f}, 0.2f } ) );
     primitives_.push_back( Primitive::PrimitiveUniquePtr( new Sphere{ glm::vec3{ -0.5f,-0.5f,  0.0f }, glm::vec3{1.0f, 0.0f, 1.0f}, 0.2f } ) );
@@ -39,40 +39,40 @@ void Scene::load(void)
     primitives_.push_back( Primitive::PrimitiveUniquePtr( new Sphere{ glm::vec3{ -0.5f, 0.5f, -0.5f }, glm::vec3{1.0f, 1.0f, 0.0f}, 0.2f } ) );
     primitives_.push_back( Primitive::PrimitiveUniquePtr( new Sphere{ glm::vec3{  0.5f,-0.5f, -0.5f }, glm::vec3{1.0f, 1.0f, 1.0f}, 0.2f } ) );
     primitives_.push_back( Primitive::PrimitiveUniquePtr( new Sphere{ glm::vec3{ -0.5f,-0.5f, -0.5f }, glm::vec3{0.5f, 0.5f, 0.5f}, 0.2f } ) );
-
+    */
     // primitives_.push_back( Primitive::PrimitiveUniquePtr( new Triangle(glm::vec3{  0.5f, 0.5f,  0.0f },
     // glm::vec3{ -1.25f, 0.0f, 0.0f }, glm::vec3{  0.0f,-1.25f, 0.0f}, glm::vec3{0.0f, 0.0f, 1.0f})));
 
     // primitives_.push_back( Primitive::PrimitiveUniquePtr( new Triangle(glm::vec3{  0.0f, 0.0f,  0.0f },
     // glm::vec3{ 0.5f, 0.0f, 0.0f }, glm::vec3{  0.0f,0.5f, 0.0f}, glm::vec3{1.0f, 0.0f, 0.0f})));
 
-    // Assimp::Importer importer;
+    Assimp::Importer importer;
 
-    // const aiScene *scene = importer.ReadFile("obj/monkey.obj",
-    //                                          aiProcess_CalcTangentSpace |
-    //                                              aiProcess_Triangulate |
-    //                                              aiProcess_JoinIdenticalVertices |
-    //                                              aiProcess_SortByPType);
+    const aiScene *scene = importer.ReadFile("obj/monkey.obj",
+                                             aiProcess_CalcTangentSpace |
+                                                 aiProcess_Triangulate |
+                                                 aiProcess_JoinIdenticalVertices |
+                                                 aiProcess_SortByPType);
 
-    // if (!scene)
-    // {
-    //     std::cerr << "Não foi possível importar o arquivo" << std::endl;
-    // }
+    if (!scene)
+    {
+        std::cerr << "Não foi possível importar o arquivo" << std::endl;
+    }
 
-    // std::srand(std::time(nullptr));
+    std::srand(std::time(nullptr));
 
-    // auto mesh = scene->mMeshes[0];
+    auto mesh = scene->mMeshes[0];
 
-    // for (unsigned int i = 0; i < mesh->mNumFaces; i++)
-    // {
-    //     auto face = mesh->mFaces[i];
+    for (unsigned int i = 0; i < mesh->mNumFaces; i++)
+    {
+        auto face = mesh->mFaces[i];
 
-    //     auto v1 = mesh->mVertices[face.mIndices[0]];
-    //     auto v2 = mesh->mVertices[face.mIndices[1]];
-    //     auto v3 = mesh->mVertices[face.mIndices[2]];
+        auto v1 = mesh->mVertices[face.mIndices[0]];
+        auto v2 = mesh->mVertices[face.mIndices[1]];
+        auto v3 = mesh->mVertices[face.mIndices[2]];
 
-    //     primitives_.push_back(Primitive::PrimitiveUniquePtr(new Triangle(glm::vec3{v1.x, v1.y, v1.z},
-    //                                                                      glm::vec3{v2.x, v2.y, v2.z}, glm::vec3{v3.x, v3.y, v3.z},
-    //                                                                      glm::vec3{static_cast<float>(std::rand() % 256) / 255.0f, static_cast<float>(std::rand() % 256) / 255.0f, static_cast<float>(std::rand() % 256) / 255.0f})));
-    // }
+        primitives_.push_back(Primitive::PrimitiveUniquePtr(new Triangle(glm::vec3{v1.x, v1.y, v1.z},
+                                                                         glm::vec3{v2.x, v2.y, v2.z}, glm::vec3{v3.x, v3.y, v3.z},
+                                                                         glm::vec3{static_cast<float>(std::rand() % 256) / 255.0f, static_cast<float>(std::rand() % 256) / 255.0f, static_cast<float>(std::rand() % 256) / 255.0f})));
+    }
 }

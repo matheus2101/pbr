@@ -30,6 +30,6 @@ Ray PinholeCamera::getWorldSpaceRay( const glm::vec2 &pixel_coord ) const
                 (min_y_ + (height * ((pixel_coord[1] + 0.5f) / resolution_[1]))) * -1,
                 -1.0f};
 
-    return Ray{ s, glm::normalize( s - position_ )};
+    return Ray{ onb_.getBasisMatrix() * s + position_, glm::normalize( onb_.getBasisMatrix() * (s - position_ ))};
 }
 
