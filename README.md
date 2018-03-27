@@ -33,3 +33,6 @@ Camera pinhole com posição arbitrária:</br>
 
 .obj carregado com ASSIMP (câmera ortogonal)</br>
 ![Exemplo](https://raw.githubusercontent.com/matheus2101/pbr/master/exercises/monkey.png)
+
+.obj carregado com ASSIMP (câmera perspectiva)</br>
+![Exemplo](https://raw.githubusercontent.com/matheus2101/pbr/master/exercises/pinhole_monkey.png)
