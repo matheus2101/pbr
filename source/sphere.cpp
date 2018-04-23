@@ -4,9 +4,10 @@ Sphere::Sphere( void )
 {}
 
 Sphere::Sphere( const glm::vec3 &center,
-                const glm::vec3 color, float radius ) :
+                const glm::vec3 color, const glm::vec3 brdf,
+                const glm::vec3 emittance, float radius ) :
         center_{ center },
-        Primitive::Primitive{color},
+        Primitive::Primitive{color, brdf, emittance},
         radius_( radius )   
 {}
 
@@ -39,6 +40,8 @@ bool Sphere::intersect( const Ray &ray,
     }
 
     // Set the intersection record
+    intersection_record.brdf_ = brdf_ / ((float) M_PI);
+    intersection_record.emittance_ = emittance_;
     intersection_record.t_ =  ( t1 > 0.00001f ) ? t1 : t2;
     intersection_record.position_ = ray.origin_ + intersection_record.t_ * ray.direction_;
     intersection_record.normal_ = glm::normalize( intersection_record.position_ - center_ );

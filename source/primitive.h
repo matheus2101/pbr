@@ -14,7 +14,7 @@ public:
 
     Primitive( void );
 
-    Primitive( glm::vec3 color );
+    Primitive( glm::vec3 color, glm::vec3 brdf, glm::vec3 emittance );
 
     void setColor( glm::vec3 color );
 
@@ -24,6 +24,8 @@ public:
                             IntersectionRecord &intersection_record ) const = 0;
 
     glm::vec3 color_;
+    glm::vec3 brdf_;
+    glm::vec3 emittance_;
 };
 
 #endif /* PRIMITIVE_H_ */

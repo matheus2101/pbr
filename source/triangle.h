@@ -12,7 +12,7 @@ class Triangle : public Primitive
 public:
     Triangle( void) = delete;
     Triangle( const glm::vec3 v1, const glm::vec3 v2,
-     const glm::vec3 v3, const glm::vec3 color);
+     const glm::vec3 v3, const glm::vec3 color, const glm::vec3 brdf, const glm::vec3 emittance);
     bool intersect( const Ray &ray,
                     IntersectionRecord &intersection_record ) const;
 
