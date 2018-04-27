@@ -19,10 +19,12 @@ public:
                Buffer &buffer );
 
     void integrate( void );
+    glm::vec3 L(Ray &ray, unsigned depth);
+    Ray get_new_ray(IntersectionRecord intersection_record);
 
-private:
+        private:
 
-    const Camera &camera_;
+        const Camera &camera_;
 
     const Scene &scene_;
 
