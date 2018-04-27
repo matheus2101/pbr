@@ -36,3 +36,9 @@ Camera pinhole com posição arbitrária:</br>
 
 .obj carregado com ASSIMP (câmera perspectiva)</br>
 ![Exemplo](https://raw.githubusercontent.com/matheus2101/pbr/master/exercises/pinhole_monkey.png)
+
+## Prática 4: implementação do algoritmo de path tracing
+
+Imagem gerada pelo path tracing</br>
+![Exemplo](https://raw.githubusercontent.com/matheus2101/pbr/master/source/pathtracing2.jpg)
+Obs. Estamos corrigindo um bug relacionado a posição da luz
