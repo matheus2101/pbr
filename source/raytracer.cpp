@@ -1,6 +1,7 @@
 #include "raytracer.h"
 #include "onb.h"
 #include <random>
+#include <omp.h>
 
 unsigned num_samples = 1000;
 unsigned max_depth = 5;
@@ -17,13 +18,22 @@ RayTracer::RayTracer(Camera &camera,
 
 void RayTracer::integrate(void)
 {
-    std::random_device rd;  //Will be used to obtain a seed for the random number engine
-    std::mt19937 gen(rd()); //Standard mersenne_twister_engine seeded with rd()
-    std::uniform_real_distribution<> dis(-0.5, 0.5);
+
+    std::uniform_real_distribution<> dis[16];
+    std::mt19937 gen[16];
+
+    for (int i = 0; i < 16; i++)
+    {
+        std::random_device rd;  //Will be used to obtain a seed for the random number engine
+        gen[i] = std::mt19937(rd()); //Standard mersenne_twister_engine seeded with rd()
+        dis[i] = std::uniform_real_distribution<>(-0.5, 0.5);
+        
+    }
 
     // Image space origin (i.e. x = 0 and y = 0) at the top left corner.
 
     // Loops over image rows
+    #pragma omp parallel for schedule(dynamic, 5)
     for (std::size_t y = 0; y < buffer_.v_resolution_; y++)
     {
         std::stringstream progress_stream;
@@ -42,8 +52,8 @@ void RayTracer::integrate(void)
             for (unsigned i = 0; i < num_samples; i++)
             {
 
-                double rand_x = dis(gen);
-                double rand_y = dis(gen);
+                double rand_x = dis[omp_get_thread_num()](gen[omp_get_thread_num()]);
+                double rand_y = dis[omp_get_thread_num()](gen[omp_get_thread_num()]);
 
                 Ray ray{camera_.getWorldSpaceRay(glm::vec2{x + 0.5f + rand_x, y + 0.5f + rand_y})};
 
@@ -75,9 +85,9 @@ glm::vec3 RayTracer::L(Ray &ray, unsigned depth)
             glm::mat3x3 universe2object = glm::transpose(object2universe);
 
             L0 = intersection_record.emittance_ +
-                L(refl_ray, ++depth) *
-                2.0f * (float)M_PI * intersection_record.brdf_ *
-                glm::dot(intersection_record.normal_, -refl_ray.direction_);
+                 L(refl_ray, ++depth) *
+                     2.0f * (float)M_PI * intersection_record.brdf_ *
+                     glm::dot(intersection_record.normal_, -refl_ray.direction_);
         }
     }
 

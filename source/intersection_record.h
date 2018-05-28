@@ -8,6 +8,7 @@
 #include "ray.h"
 #include "PRNG.h"
 #include "onb.h"
+#include <omp.h>
 
 #define _USE_MATH_DEFINES
 
@@ -24,8 +25,8 @@ struct IntersectionRecord
 
     Ray get_new_ray()
     {
-        float r1 = prng.get_rand(0);
-        float r2 = prng.get_rand(0);
+        float r1 = prng.get_rand(omp_get_thread_num());
+        float r2 = prng.get_rand(omp_get_thread_num());
 
         float theta = std::acos(1 - r1);
         float phi = 2 * M_PI * r2;

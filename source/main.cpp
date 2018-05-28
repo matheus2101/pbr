@@ -1,5 +1,6 @@
 #include "main.h"
 #include "PRNG.h"
+#include <omp.h>
 
 PRNG prng;
 
@@ -13,7 +14,7 @@ int main( void )
                                -2.25f, 
                                 2.25f,
                                 glm::ivec2{ x_resolution, y_resolution }, 
-                                glm::vec3{ 0.0f, 0.3f,  1.5f },     // position
+                                glm::vec3{ 0.0f, 0.3f,  1.8f },     // position
                                 glm::vec3{ 0.0f, 1.0f,  0.0f },     // up
                                 glm::vec3{ 0.0f, 0.0f, -1.0f } };   // look at
     Scene scene{};
@@ -35,6 +36,7 @@ int main( void )
 
     // Save the rendered image to a .ppm file.
     rendering_buffer.save( "output_image.ppm" );
+    
 
     return EXIT_SUCCESS;
 }

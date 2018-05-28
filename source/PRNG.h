@@ -5,8 +5,8 @@
 
 class PRNG {
     private:
-        std::uniform_real_distribution<> distribution;
-        std::mt19937 generator;
+        std::uniform_real_distribution<> distribution[16];
+        std::mt19937 generator[16];
 
     public:
         PRNG();
