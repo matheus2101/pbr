@@ -55,3 +55,13 @@ bool Triangle::intersect( const Ray &ray,
 
     return true;
 }
+
+AABB Triangle::getAABB(void) const
+{
+    AABB aabb;
+
+    aabb.min_ = glm::min(glm::min(v0_, v1_), v2_);
+    aabb.max_ = glm::max(glm::max(v0_, v1_), v2_);
+    aabb.centroid_ = (1.0f / 3.0f) * (v0_ + v1_ + v1_);
+    return aabb;
+}

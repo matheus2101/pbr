@@ -16,6 +16,8 @@ public:
     bool intersect( const Ray &ray,
                     IntersectionRecord &intersection_record ) const;
 
+    AABB getAABB(void) const;
+
     glm::vec3 v0_, v1_, v2_;
 };
 

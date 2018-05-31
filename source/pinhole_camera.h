@@ -14,6 +14,7 @@ public:
                         const float max_x,
                         const float min_y,
                         const float max_y,
+                        const float distance,
                         const glm::ivec2 &resolution,
                         const glm::vec3 &position,
                         const glm::vec3 &up_vector,
@@ -28,6 +29,8 @@ public:
     float min_y_;
 
     float max_y_;
+
+    float distance_;
 
 };
 

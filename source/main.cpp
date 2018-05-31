@@ -6,20 +6,23 @@ PRNG prng;
 
 int main( void )
 {
-    unsigned int x_resolution = 512;
-    unsigned int y_resolution = 512;
+    unsigned int x_resolution = 1280;
+    unsigned int y_resolution = 720;
 
-    PinholeCamera camera{ -2.25f, 
-                                2.25f, 
-                               -2.25f, 
-                                2.25f,
-                                glm::ivec2{ x_resolution, y_resolution }, 
-                                glm::vec3{ 0.0f, 0.3f,  1.8f },     // position
-                                glm::vec3{ 0.0f, 1.0f,  0.0f },     // up
-                                glm::vec3{ 0.0f, 0.0f, -1.0f } };   // look at
+    PinholeCamera camera{
+        -2.0f,
+                         2.0f,
+                         -1.265625f,
+                         1.265625f,
+         1.5f,
+        glm::ivec2{x_resolution, y_resolution},
+        glm::vec3{0.0f, 1.8f, 0.99f},  // position
+        glm::vec3{0.0f, 1.0f, 0.0f},   // up
+        glm::vec3{0.0f, 1.0f, -1.0f}}; // look at
     Scene scene{};
     
     scene.load();
+    scene.buildBVH();
 
     prng = PRNG();
 

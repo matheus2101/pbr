@@ -12,5 +12,5 @@ PRNG::PRNG() {
 }
 
 double PRNG::get_rand(unsigned index) {
-    this->distribution[index](this->generator[index]);
+    return this->distribution[index](this->generator[index]);
 }

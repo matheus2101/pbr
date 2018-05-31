@@ -3,6 +3,7 @@
 
 #include <memory>
 
+#include "aabb.h"
 #include "ray.h"
 #include "intersection_record.h"
 
@@ -22,6 +23,8 @@ public:
 
     virtual bool intersect( const Ray &ray,
                             IntersectionRecord &intersection_record ) const = 0;
+
+    virtual AABB getAABB(void) const = 0;
 
     glm::vec3 color_;
     glm::vec3 brdf_;

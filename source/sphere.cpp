@@ -50,3 +50,12 @@ bool Sphere::intersect( const Ray &ray,
     return true;
 }
 
+AABB Sphere::getAABB(void) const
+{
+    AABB aabb;
+
+    aabb.min_ = center_ - radius_;
+    aabb.max_ = center_ + radius_;
+    aabb.centroid_ = center_;
+    return aabb;
+}
