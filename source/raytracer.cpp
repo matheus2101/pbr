@@ -3,7 +3,7 @@
 #include <random>
 #include <omp.h>
 
-unsigned num_samples = 300;
+unsigned num_samples = 500;
 unsigned max_depth = 5;
 
 RayTracer::RayTracer(Camera &camera,
@@ -19,21 +19,20 @@ RayTracer::RayTracer(Camera &camera,
 void RayTracer::integrate(void)
 {
 
-    std::uniform_real_distribution<> dis[16];
+    std::uniform_real_distribution<float> dis[16];
     std::mt19937 gen[16];
 
     for (int i = 0; i < 16; i++)
     {
         std::random_device rd;  //Will be used to obtain a seed for the random number engine
         gen[i] = std::mt19937(rd()); //Standard mersenne_twister_engine seeded with rd()
-        dis[i] = std::uniform_real_distribution<>(-0.5, 0.5);
-        
+        dis[i] = std::uniform_real_distribution<float>(0.0f, 1.0f);
     }
 
     // Image space origin (i.e. x = 0 and y = 0) at the top left corner.
+    #pragma omp parallel for schedule(dynamic, 5)
 
     // Loops over image rows
-    #pragma omp parallel for schedule(dynamic, 5)
     for (std::size_t y = 0; y < buffer_.v_resolution_; y++)
     {
         std::stringstream progress_stream;
@@ -55,12 +54,12 @@ void RayTracer::integrate(void)
                 double rand_x = dis[omp_get_thread_num()](gen[omp_get_thread_num()]);
                 double rand_y = dis[omp_get_thread_num()](gen[omp_get_thread_num()]);
 
-                Ray ray{camera_.getWorldSpaceRay(glm::vec2{x + 0.5f + rand_x, y + 0.5f + rand_y})};
+                Ray ray{camera_.getWorldSpaceRay(glm::vec2{x + rand_x, y + rand_y})};
 
                 buffer_.buffer_data_[x][y] += L(ray, 0);
             }
 
-            buffer_.buffer_data_[x][y] /= num_samples;
+            buffer_.buffer_data_[x][y] /= static_cast<float> (num_samples);
         }
     }
 
@@ -69,7 +68,7 @@ void RayTracer::integrate(void)
 
 glm::vec3 RayTracer::L(Ray &ray, unsigned depth)
 {
-    glm::vec3 L0{0.0, 0.0, 0.0};
+    glm::vec3 L0{0.0f, 0.0f, 0.0f};
     IntersectionRecord intersection_record;
     intersection_record.t_ = std::numeric_limits<double>::max();
 
@@ -79,15 +78,8 @@ glm::vec3 RayTracer::L(Ray &ray, unsigned depth)
         {
             Ray refl_ray = intersection_record.get_new_ray();
 
-            ONB basis;
-            basis.setFromV(intersection_record.normal_);
-            glm::mat3x3 object2universe = basis.getBasisMatrix();
-            glm::mat3x3 universe2object = glm::transpose(object2universe);
-
-            L0 = intersection_record.emittance_ +
-                 L(refl_ray, ++depth) *
-                     2.0f * (float)M_PI * intersection_record.brdf_ *
-                     glm::dot(intersection_record.normal_, -refl_ray.direction_);
+            L0 = intersection_record.emittance_ + 2.0f * ((float)M_PI) * intersection_record.brdf_ *
+                                                      L(refl_ray, ++depth) * glm::dot(intersection_record.normal_, refl_ray.direction_);
         }
     }
 

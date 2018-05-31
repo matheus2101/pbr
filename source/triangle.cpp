@@ -47,7 +47,11 @@ bool Triangle::intersect( const Ray &ray,
 
     intersection_record.brdf_ = brdf_ / ((float) M_PI);
     intersection_record.emittance_ = emittance_;
-    intersection_record.normal_ = glm::normalize(glm::cross(v2_ - v0_, v1_ - v0_));
+    intersection_record.normal_ = glm::normalize(glm::cross(v1_ - v0_, v2_ - v0_));
+    
+    if (glm::dot(intersection_record.normal_, ray.direction_) > 0)
+        intersection_record.normal_ = -intersection_record.normal_;
+    
     intersection_record.color_ = color_;
     intersection_record.t_ = t;
     intersection_record.position_ = ray.origin_ + ray.direction_ * t;

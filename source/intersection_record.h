@@ -28,8 +28,8 @@ struct IntersectionRecord
         float r1 = prng.get_rand(omp_get_thread_num());
         float r2 = prng.get_rand(omp_get_thread_num());
 
-        float theta = std::acos(1 - r1);
-        float phi = 2 * M_PI * r2;
+        float theta = glm::acos(1 - r1);
+        float phi = 2.0f * ((float)M_PI) * r2;
 
         glm::vec3 direction;
         direction.x = sinf(theta) * cosf(phi);
@@ -40,9 +40,8 @@ struct IntersectionRecord
         onb.setFromV(this->normal_);
 
         Ray new_ray;
-        new_ray.origin_ = this->position_;
+        new_ray.origin_ = this->position_ + (this->normal_ * 0.001f);
         new_ray.direction_ = onb.getBasisMatrix() * direction;
-        
 
         return new_ray;
     }

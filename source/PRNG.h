@@ -5,12 +5,12 @@
 
 class PRNG {
     private:
-        std::uniform_real_distribution<> distribution[16];
+        std::uniform_real_distribution<float> distribution[16];
         std::mt19937 generator[16];
 
     public:
         PRNG();
-        double get_rand(unsigned index);
+        float get_rand(unsigned index);
 };
 
 #endif
