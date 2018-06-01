@@ -8,6 +8,7 @@
 #include "ray.h"
 #include "PRNG.h"
 #include "onb.h"
+#include "material.h"
 #include <omp.h>
 
 #define _USE_MATH_DEFINES
@@ -22,6 +23,7 @@ struct IntersectionRecord
     glm::vec3 color_;
     glm::vec3 brdf_;
     glm::vec3 emittance_;
+    Type type_;
 
     Ray get_new_ray()
     {
@@ -32,9 +34,9 @@ struct IntersectionRecord
         float phi = 2.0f * ((float)M_PI) * r2;
 
         glm::vec3 direction;
-        direction.x = sinf(theta) * cosf(phi);
-        direction.y = sinf(theta) * sinf(phi);
-        direction.z = cosf(theta);
+        direction.x = sin(theta) * cos(phi);
+        direction.y = sin(theta) * sin(phi);
+        direction.z = cos(theta);
 
         ONB onb;
         onb.setFromV(this->normal_);
@@ -44,6 +46,21 @@ struct IntersectionRecord
         new_ray.direction_ = onb.getBasisMatrix() * direction;
 
         return new_ray;
+    }
+
+    Ray get_reflection(Ray& ray)
+    {
+        ONB onb_;
+
+        onb_.setFromV(this->normal_);
+
+        Ray newray;
+
+        glm::vec3 newdir = glm::transpose(onb_.getBasisMatrix()) * ray.direction_;
+        newdir = {newdir.x, -newdir.y, newdir.z};
+        newray = {this->position_ + (this->normal_ * 0.001f), onb_.getBasisMatrix() * newdir};
+
+        return newray;
     }
 };
 

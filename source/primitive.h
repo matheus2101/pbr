@@ -6,6 +6,7 @@
 #include "aabb.h"
 #include "ray.h"
 #include "intersection_record.h"
+#include "material.h"
 
 class Primitive
 {
@@ -15,7 +16,7 @@ public:
 
     Primitive( void );
 
-    Primitive( glm::vec3 color, glm::vec3 brdf, glm::vec3 emittance );
+    Primitive( glm::vec3 color, glm::vec3 brdf, glm::vec3 emittance, Type type );
 
     void setColor( glm::vec3 color );
 
@@ -29,6 +30,7 @@ public:
     glm::vec3 color_;
     glm::vec3 brdf_;
     glm::vec3 emittance_;
+    Type type_;
 };
 
 #endif /* PRIMITIVE_H_ */

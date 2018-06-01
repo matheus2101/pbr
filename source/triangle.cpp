@@ -2,8 +2,8 @@
 #define EPSILON 0.000001f
 
 Triangle::Triangle(const glm::vec3 v0, const glm::vec3 v1,
- const glm::vec3 v2, const glm::vec3 color, const glm::vec3 brdf, const glm::vec3 emittance): 
-Primitive::Primitive{color, brdf, emittance}, v0_{v0}, v1_{v1}, v2_{v2} {}
+ const glm::vec3 v2, const glm::vec3 color, const glm::vec3 brdf, const glm::vec3 emittance, Type type): 
+Primitive::Primitive{color, brdf, emittance, type}, v0_{v0}, v1_{v1}, v2_{v2} {}
 
 bool Triangle::intersect( const Ray &ray,
                     IntersectionRecord &intersection_record ) const
@@ -49,12 +49,13 @@ bool Triangle::intersect( const Ray &ray,
     intersection_record.emittance_ = emittance_;
     intersection_record.normal_ = glm::normalize(glm::cross(v1_ - v0_, v2_ - v0_));
     
-    if (glm::dot(intersection_record.normal_, ray.direction_) > 0)
+    if (glm::dot(intersection_record.normal_, ray.direction_) > 0.0f)
         intersection_record.normal_ = -intersection_record.normal_;
     
     intersection_record.color_ = color_;
     intersection_record.t_ = t;
     intersection_record.position_ = ray.origin_ + ray.direction_ * t;
+    intersection_record.type_ = this->type_;
 
 
     return true;

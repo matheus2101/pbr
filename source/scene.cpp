@@ -47,12 +47,6 @@ void Scene::load(void)
         auto mesh = scene->mMeshes[j];
         std::cout << mesh->mName.C_Str() << " " << j << std::endl;
 
-        std::random_device rd;
-        std::mt19937 mt(rd());
-        std::uniform_real_distribution<double> dist(0.0, 1.0);
-
-        double r = dist(mt), g = dist(mt), b = dist(mt);
-
         for (unsigned int i = 0; i < mesh->mNumFaces; i++)
         {
             auto face = mesh->mFaces[i];
@@ -61,18 +55,64 @@ void Scene::load(void)
             auto v2 = mesh->mVertices[face.mIndices[1]];
             auto v3 = mesh->mVertices[face.mIndices[2]];
 
-            if (j == 2) {
+            if (j == 2) { // lamp
                 primitives_.push_back(Primitive::PrimitiveUniquePtr(new Triangle(glm::vec3{v1.x, v1.y, v1.z},
                                                                                  glm::vec3{v2.x, v2.y, v2.z}, glm::vec3{v3.x, v3.y, v3.z},
                                                                                  glm::vec3{0.0f, 1.0f, 0.0f},
-                                                                                 glm::vec3{r, g, b},
-                                                                                 glm::vec3{100.0, 100.0, 100.0})));
-            } else {
+                                                                                 glm::vec3{1.0f, 1.0f, 1.0f},
+                                                                                 glm::vec3{15.0, 15.0, 15.0},
+                                                                                 Type::DIFFUSE
+                                                                                 )));
+            } else if ((j == 3) || (j == 4) || (j == 1)) { // walls & ceiling
                 primitives_.push_back(Primitive::PrimitiveUniquePtr(new Triangle(glm::vec3{v1.x, v1.y, v1.z},
                                                                                  glm::vec3{v2.x, v2.y, v2.z}, glm::vec3{v3.x, v3.y, v3.z},
                                                                                  glm::vec3{0.0f, 1.0f, 0.0f},
-                                                                                 glm::vec3{r, g, b},
-                                                                                 glm::vec3{0.0, 0.0, 0.0})));
+                                                                                 glm::vec3{1.0f, 1.0f, 1.0f},
+                                                                                 glm::vec3{0.0, 0.0, 0.0},
+                                                                                 Type::DIFFUSE)));
+            } else if (j == 0) { // floor
+                primitives_.push_back(Primitive::PrimitiveUniquePtr(new Triangle(glm::vec3{v1.x, v1.y, v1.z},
+                                                                                 glm::vec3{v2.x, v2.y, v2.z}, glm::vec3{v3.x, v3.y, v3.z},
+                                                                                 glm::vec3{0.0f, 1.0f, 0.0f},
+                                                                                 glm::vec3{1.0f, 1.0f, 0.0f},
+                                                                                 glm::vec3{0.0, 0.0, 0.0},
+                                                                                 Type::DIFFUSE)));
+            }
+            else if (j == 5)
+            { // left wall
+                primitives_.push_back(Primitive::PrimitiveUniquePtr(new Triangle(glm::vec3{v1.x, v1.y, v1.z},
+                                                                                 glm::vec3{v2.x, v2.y, v2.z}, glm::vec3{v3.x, v3.y, v3.z},
+                                                                                 glm::vec3{0.0f, 1.0f, 0.0f},
+                                                                                 glm::vec3{0.0f, 1.0f, 1.0f},
+                                                                                 glm::vec3{0.0, 0.0, 0.0},
+                                                                                 Type::MIRROR)));
+            }
+            else if (j == 7)
+            { // short box
+                primitives_.push_back(Primitive::PrimitiveUniquePtr(new Triangle(glm::vec3{v1.x, v1.y, v1.z},
+                                                                                 glm::vec3{v2.x, v2.y, v2.z}, glm::vec3{v3.x, v3.y, v3.z},
+                                                                                 glm::vec3{0.0f, 1.0f, 0.0f},
+                                                                                 glm::vec3{0.0f, 0.0f, 1.0f},
+                                                                                 glm::vec3{0.0, 0.0, 0.0},
+                                                                                 Type::DIFFUSE)));
+            }
+            else if (j == 8)
+            { // tall box front
+                primitives_.push_back(Primitive::PrimitiveUniquePtr(new Triangle(glm::vec3{v1.x, v1.y, v1.z},
+                                                                                 glm::vec3{v2.x, v2.y, v2.z}, glm::vec3{v3.x, v3.y, v3.z},
+                                                                                 glm::vec3{0.0f, 1.0f, 0.0f},
+                                                                                 glm::vec3{0.5f, 1.0f, 1.0f},
+                                                                                 glm::vec3{0.0, 0.0, 0.0},
+                                                                                 Type::MIRROR)));
+            }
+            else
+            {
+                primitives_.push_back(Primitive::PrimitiveUniquePtr(new Triangle(glm::vec3{v1.x, v1.y, v1.z},
+                                                                                 glm::vec3{v2.x, v2.y, v2.z}, glm::vec3{v3.x, v3.y, v3.z},
+                                                                                 glm::vec3{0.0f, 1.0f, 0.0f},
+                                                                                 glm::vec3{1.0f, 0.0f, 0.0f},
+                                                                                 glm::vec3{0.0, 0.0, 0.0},
+                                                                                 Type::DIFFUSE)));
             }
         }
     }

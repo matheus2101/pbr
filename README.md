@@ -42,3 +42,8 @@ Camera pinhole com posição arbitrária:</br>
 Imagem gerada pelo path tracing</br>
 ![Exemplo](https://raw.githubusercontent.com/matheus2101/pbr/master/source/pathtracing2.jpg)</br>
 Obs. Estamos corrigindo um bug relacionado à posição da luz
+
+## Correção de bugs e implementação de espelho
+
+Cornellbox com espelho na parede esquerda.</br>
+![Exemplo](https://raw.githubusercontent.com/matheus2101/pbr/master/source/cornellbox.jpg)</br>

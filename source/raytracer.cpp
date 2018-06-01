@@ -3,7 +3,7 @@
 #include <random>
 #include <omp.h>
 
-unsigned num_samples = 500;
+unsigned num_samples = 3000;
 unsigned max_depth = 5;
 
 RayTracer::RayTracer(Camera &camera,
@@ -24,13 +24,13 @@ void RayTracer::integrate(void)
 
     for (int i = 0; i < 16; i++)
     {
-        std::random_device rd;  //Will be used to obtain a seed for the random number engine
+        std::random_device rd;       //Will be used to obtain a seed for the random number engine
         gen[i] = std::mt19937(rd()); //Standard mersenne_twister_engine seeded with rd()
         dis[i] = std::uniform_real_distribution<float>(0.0f, 1.0f);
     }
 
-    // Image space origin (i.e. x = 0 and y = 0) at the top left corner.
-    #pragma omp parallel for schedule(dynamic, 5)
+// Image space origin (i.e. x = 0 and y = 0) at the top left corner.
+#pragma omp parallel for schedule(dynamic, 5)
 
     // Loops over image rows
     for (std::size_t y = 0; y < buffer_.v_resolution_; y++)
@@ -59,7 +59,7 @@ void RayTracer::integrate(void)
                 buffer_.buffer_data_[x][y] += L(ray, 0);
             }
 
-            buffer_.buffer_data_[x][y] /= static_cast<float> (num_samples);
+            buffer_.buffer_data_[x][y] /= static_cast<float>(num_samples);
         }
     }
 
@@ -76,10 +76,27 @@ glm::vec3 RayTracer::L(Ray &ray, unsigned depth)
     {
         if (scene_.intersect(ray, intersection_record))
         {
-            Ray refl_ray = intersection_record.get_new_ray();
+            if (intersection_record.type_ == Type::DIFFUSE)
+            {
+                Ray refl_ray = intersection_record.get_new_ray();
 
-            L0 = intersection_record.emittance_ + 2.0f * ((float)M_PI) * intersection_record.brdf_ *
-                                                      L(refl_ray, ++depth) * glm::dot(intersection_record.normal_, refl_ray.direction_);
+                float cos_ = glm::dot(refl_ray.direction_, intersection_record.normal_);
+
+                if (cos_ < 0)
+                {
+                    refl_ray.direction_ = -refl_ray.direction_;
+                    cos_ = -cos_;
+                }
+
+                L0 = intersection_record.emittance_ + 2.0f * ((float)M_PI) * intersection_record.brdf_ *
+                                                          L(refl_ray, ++depth) * cos_;
+            }
+            else if (intersection_record.type_ == Type::MIRROR)
+            {
+                Ray refl_ray = intersection_record.get_reflection(ray);
+
+                L0 = L(refl_ray, ++depth);
+            }
         }
     }
 

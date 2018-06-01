@@ -51,16 +51,6 @@ g backWall
 usemtl backWall
 f -4 -3 -2 -1
 
-## Object frontWall
-v  -0.99  0.00   1.00 
-v   1.00  0.00   1.00
-v   1.00  1.99   1.00
-v  -1.02  1.99   1.00
-
-g frontWall
-usemtl frontWall
-f -4 -3 -2 -1
-
 ## Object rightwall 
 v	1.00  0.00  -1.04   
 v	1.00  0.00   0.99
