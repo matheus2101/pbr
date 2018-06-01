@@ -60,10 +60,10 @@ void Scene::load(void)
                                                                                  glm::vec3{v2.x, v2.y, v2.z}, glm::vec3{v3.x, v3.y, v3.z},
                                                                                  glm::vec3{0.0f, 1.0f, 0.0f},
                                                                                  glm::vec3{1.0f, 1.0f, 1.0f},
-                                                                                 glm::vec3{15.0, 15.0, 15.0},
+                                                                                 glm::vec3{10.0, 10.0, 10.0},
                                                                                  Type::DIFFUSE
                                                                                  )));
-            } else if ((j == 3) || (j == 4) || (j == 1)) { // walls & ceiling
+            } else if ((j == 3) || (j == 1)) { // walls & ceiling
                 primitives_.push_back(Primitive::PrimitiveUniquePtr(new Triangle(glm::vec3{v1.x, v1.y, v1.z},
                                                                                  glm::vec3{v2.x, v2.y, v2.z}, glm::vec3{v3.x, v3.y, v3.z},
                                                                                  glm::vec3{0.0f, 1.0f, 0.0f},
@@ -78,6 +78,15 @@ void Scene::load(void)
                                                                                  glm::vec3{0.0, 0.0, 0.0},
                                                                                  Type::DIFFUSE)));
             }
+            else if (j == 4)
+            { // right wall
+                primitives_.push_back(Primitive::PrimitiveUniquePtr(new Triangle(glm::vec3{v1.x, v1.y, v1.z},
+                                                                                 glm::vec3{v2.x, v2.y, v2.z}, glm::vec3{v3.x, v3.y, v3.z},
+                                                                                 glm::vec3{0.0f, 0.0f, 0.75f},
+                                                                                 glm::vec3{0.0f, 0.0f, 0.75f},
+                                                                                 glm::vec3{0.0, 0.0, 0.0},
+                                                                                 Type::DIFFUSE)));
+            }
             else if (j == 5)
             { // left wall
                 primitives_.push_back(Primitive::PrimitiveUniquePtr(new Triangle(glm::vec3{v1.x, v1.y, v1.z},
@@ -87,23 +96,23 @@ void Scene::load(void)
                                                                                  glm::vec3{0.0, 0.0, 0.0},
                                                                                  Type::MIRROR)));
             }
-            else if (j == 7)
+            else if (j == 6)
             { // short box
                 primitives_.push_back(Primitive::PrimitiveUniquePtr(new Triangle(glm::vec3{v1.x, v1.y, v1.z},
                                                                                  glm::vec3{v2.x, v2.y, v2.z}, glm::vec3{v3.x, v3.y, v3.z},
-                                                                                 glm::vec3{0.0f, 1.0f, 0.0f},
-                                                                                 glm::vec3{0.0f, 0.0f, 1.0f},
+                                                                                 glm::vec3{1.0f, 0.0f, 0.0f},
+                                                                                 glm::vec3{1.0f, 0.0f, 0.0f},
                                                                                  glm::vec3{0.0, 0.0, 0.0},
                                                                                  Type::DIFFUSE)));
             }
-            else if (j == 8)
-            { // tall box front
+            else if (j == 7)
+            { // tall box
                 primitives_.push_back(Primitive::PrimitiveUniquePtr(new Triangle(glm::vec3{v1.x, v1.y, v1.z},
                                                                                  glm::vec3{v2.x, v2.y, v2.z}, glm::vec3{v3.x, v3.y, v3.z},
-                                                                                 glm::vec3{0.0f, 1.0f, 0.0f},
-                                                                                 glm::vec3{0.5f, 1.0f, 1.0f},
+                                                                                 glm::vec3{0.0f, 0.0f, 1.0f},
+                                                                                 glm::vec3{0.0f, 0.0f, 1.0f},
                                                                                  glm::vec3{0.0, 0.0, 0.0},
-                                                                                 Type::MIRROR)));
+                                                                                 Type::DIFFUSE)));
             }
             else
             {

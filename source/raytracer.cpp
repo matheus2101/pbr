@@ -3,7 +3,7 @@
 #include <random>
 #include <omp.h>
 
-unsigned num_samples = 3000;
+unsigned num_samples = 300;
 unsigned max_depth = 5;
 
 RayTracer::RayTracer(Camera &camera,
@@ -88,8 +88,15 @@ glm::vec3 RayTracer::L(Ray &ray, unsigned depth)
                     cos_ = -cos_;
                 }
 
-                L0 = intersection_record.emittance_ + 2.0f * ((float)M_PI) * intersection_record.brdf_ *
+                if (intersection_record.emittance_ == glm::vec3{0.0f, 0.0f, 0.0f})
+                {                
+                    L0 = intersection_record.emittance_ + 2.0f * ((float)M_PI) * intersection_record.brdf_ *
                                                           L(refl_ray, ++depth) * cos_;
+                }
+                else
+                {
+                    L0 = intersection_record.emittance_ + 2.0f * ((float)M_PI) * intersection_record.brdf_ * cos_;
+                }
             }
             else if (intersection_record.type_ == Type::MIRROR)
             {
