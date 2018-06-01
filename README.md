@@ -46,4 +46,4 @@ Obs. Estamos corrigindo um bug relacionado à posição da luz
 ## Correção de bugs e implementação de espelho
 
 Cornellbox com espelho na parede esquerda.</br>
-![Exemplo](https://raw.githubusercontent.com/matheus2101/pbr/master/source/cornellbox.jpg)</br>
+![Exemplo](https://raw.githubusercontent.com/matheus2101/pbr/master/exercises/cornellbox.jpg)</br>
