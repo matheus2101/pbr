@@ -40,10 +40,15 @@ Camera pinhole com posição arbitrária:</br>
 ## Prática 4: implementação do algoritmo de path tracing
 
 Imagem gerada pelo path tracing</br>
-![Exemplo](https://raw.githubusercontent.com/matheus2101/pbr/master/source/pathtracing2.jpg)</br>
+![Exemplo](https://raw.githubusercontent.com/matheus2101/pbr/master/exercises/pathtracing.jpg)</br>
 Obs. Estamos corrigindo um bug relacionado à posição da luz
 
 ## Correção de bugs e implementação de espelho
 
 Cornellbox com espelho na parede esquerda.</br>
 ![Exemplo](https://raw.githubusercontent.com/matheus2101/pbr/master/exercises/cornellbox.jpg)</br>
+
+## Compressão gama
+
+Variação da Cornellbox com espelhos e compressão gama.</br>
+![Exemplo](https://raw.githubusercontent.com/matheus2101/pbr/master/exercises/gamma.jpg)</br>

@@ -3,7 +3,7 @@
 #include <random>
 #include <omp.h>
 
-unsigned num_samples = 300;
+unsigned num_samples = 5000;
 unsigned max_depth = 5;
 
 RayTracer::RayTracer(Camera &camera,
