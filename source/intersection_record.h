@@ -48,7 +48,32 @@ struct IntersectionRecord
         return new_ray;
     }
 
-    Ray get_reflection(Ray& ray)
+    Ray importance_sampling(glm::vec3 direction, float alpha)
+    {
+        float r1 = prng.get_rand(omp_get_thread_num());
+        float r2 = prng.get_rand(omp_get_thread_num());
+
+        float phi = 2 * (float)M_PI * r2;
+        float theta = atan(sqrt(-(alpha * alpha) * log(1 - r1)));
+        glm::vec3 m = glm::vec3{cos(phi) * sin(theta), cos(theta), sin(phi) * sin(theta)};
+
+        ONB onb;
+        onb.setFromV(this->normal_);
+
+        glm::vec3 wo = -glm::normalize(glm::transpose(onb.getBasisMatrix()) * direction);
+
+        // generate the light ray by reflecting wo about m
+        glm::vec3 wi = 2.0f * m * dot(m, wo) - wo;
+
+        Ray new_ray;
+
+        new_ray.origin_ = this->position_ + (this->normal_ * 0.001f);
+        new_ray.direction_ = glm::normalize(onb.getBasisMatrix() * wi);
+
+        return new_ray;
+    }
+
+    Ray get_reflection(Ray &ray)
     {
         ONB onb_;
 

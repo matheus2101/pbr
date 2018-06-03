@@ -2,8 +2,9 @@
 #include "onb.h"
 #include <random>
 #include <omp.h>
+#include <glm/glm.hpp>
 
-unsigned num_samples = 5000;
+unsigned num_samples = 200;
 unsigned max_depth = 5;
 
 RayTracer::RayTracer(Camera &camera,
@@ -14,6 +15,48 @@ RayTracer::RayTracer(Camera &camera,
                                        background_color_{background_color},
                                        buffer_(buffer)
 {
+}
+
+glm::vec3 RayTracer::cook_torrance(glm::vec3 wi, glm::vec3 wo, IntersectionRecord intersection_record)
+{
+    wo = -wo;
+    glm::vec3 h = glm::normalize((wo + wi) / 2.0f);
+    double cosnwo = glm::dot(glm::vec3(intersection_record.normal_), wo);
+    double nh = glm::abs(glm::dot(glm::vec3(intersection_record.normal_), h));
+    double nwo = glm::abs(cosnwo);
+    double nwi = glm::abs(glm::dot(glm::vec3(intersection_record.normal_), wi));
+    double hwo = glm::abs(glm::dot(h, wo));
+    double hwi = glm::abs(glm::dot(h, wi));
+
+    //Beckmann
+
+    double m = 0.3;
+    double nh2 = nh * nh;
+    double m2 = m * m;
+    double d1 = 1.0 / (M_PI * m2 * nh2 * nh2);
+    double d2 = (nh2 - 1.0) / (m2 * nh2);
+    double D = d1 * glm::exp(d2);
+
+    //Geometric term
+
+    double g1 = 2.0 * nh / hwo;
+    double G = glm::min(1.0, glm::min(g1 * nwo, g1 * nwi));
+
+    //Fresnel term
+
+    double one_minus_hwi_5 = (1.0 - hwi) * (1.0 - hwi) * (1.0 - hwi) * (1.0 - hwi) * (1.0 - hwi);
+    glm::dvec3 F = M_PI * glm::dvec3(intersection_record.brdf_) + (glm::dvec3(1.0) - (M_PI * glm::dvec3(intersection_record.brdf_))) * one_minus_hwi_5;
+
+    //glm::dvec3 CT = ( F * D * G) / ( 4.0 * nwo * nwi );
+    glm::dvec3 CT = (F * G) / (4.0 * nwo * nwi);
+
+    //PDF
+
+    //double PDF = ( D * nh ) / ( 4.0 * hwi );
+    double PDF = nh / (4.0 * hwi);
+
+    //return ( F * D * G) / ( 4.0 * nwo * nwi );
+    return (CT * cosnwo) / PDF;
 }
 
 void RayTracer::integrate(void)
@@ -89,9 +132,9 @@ glm::vec3 RayTracer::L(Ray &ray, unsigned depth)
                 }
 
                 if (intersection_record.emittance_ == glm::vec3{0.0f, 0.0f, 0.0f})
-                {                
+                {
                     L0 = intersection_record.emittance_ + 2.0f * ((float)M_PI) * intersection_record.brdf_ *
-                                                          L(refl_ray, ++depth) * cos_;
+                                                              L(refl_ray, ++depth) * cos_;
                 }
                 else
                 {
@@ -103,6 +146,12 @@ glm::vec3 RayTracer::L(Ray &ray, unsigned depth)
                 Ray refl_ray = intersection_record.get_reflection(ray);
 
                 L0 = L(refl_ray, ++depth);
+            }
+            else if (intersection_record.type_ == Type::METAL)
+            {
+                Ray refl_ray = intersection_record.importance_sampling(ray.direction_, 0.0f);
+                L0 = intersection_record.emittance_ + 2.0f * glm::vec3(cook_torrance(glm::dvec3(refl_ray.direction_), glm::dvec3(ray.direction_), intersection_record)) *
+                                                          L(refl_ray, ++depth) * glm::dot(intersection_record.normal_, refl_ray.direction_);
             }
         }
     }

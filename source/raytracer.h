@@ -21,8 +21,8 @@ public:
     void integrate( void );
     glm::vec3 L(Ray &ray, unsigned depth);
     Ray get_new_ray(IntersectionRecord intersection_record);
-
-        private:
+    glm::vec3 cook_torrance(glm::vec3 wi, glm::vec3 wo, IntersectionRecord intersection_record);
+        private :
 
         const Camera &camera_;
 

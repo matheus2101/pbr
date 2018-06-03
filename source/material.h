@@ -4,4 +4,5 @@ enum Type
 {
     DIFFUSE,
     MIRROR,
+    METAL
 };
