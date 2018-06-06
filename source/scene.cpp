@@ -98,21 +98,21 @@ void Scene::load(void)
             }
             else if (j == 1)
             { // short box
-                primitives_.push_back(Primitive::PrimitiveUniquePtr(new Triangle(glm::vec3{v1.x, v1.y, v1.z},
-                                                                                 glm::vec3{v2.x, v2.y, v2.z}, glm::vec3{v3.x, v3.y, v3.z},
-                                                                                 glm::vec3{1.0f, 0.0f, 0.0f},
-                                                                                 glm::vec3{1.0f, 0.0f, 0.0f},
-                                                                                 glm::vec3{0.0, 0.0, 0.0},
-                                                                                 Type::DIFFUSE)));
+                // primitives_.push_back(Primitive::PrimitiveUniquePtr(new Triangle(glm::vec3{v1.x, v1.y, v1.z},
+                //                                                                  glm::vec3{v2.x, v2.y, v2.z}, glm::vec3{v3.x, v3.y, v3.z},
+                //                                                                  glm::vec3{1.0f, 0.0f, 0.0f},
+                //                                                                  glm::vec3{1.0f, 0.0f, 0.0f},
+                //                                                                  glm::vec3{0.0, 0.0, 0.0},
+                //                                                                  Type::GLASS)));
             }
             else if (j == 0)
             { // tall box
-                primitives_.push_back(Primitive::PrimitiveUniquePtr(new Triangle(glm::vec3{v1.x, v1.y, v1.z},
-                                                                                 glm::vec3{v2.x, v2.y, v2.z}, glm::vec3{v3.x, v3.y, v3.z},
-                                                                                 glm::vec3{0.0f, 0.0f, 1.0f},
-                                                                                 glm::vec3{1.0f, 0.0f, 1.0f},
-                                                                                 glm::vec3{0.0, 0.0, 0.0},
-                                                                                 Type::METAL)));
+                // primitives_.push_back(Primitive::PrimitiveUniquePtr(new Triangle(glm::vec3{v1.x, v1.y, v1.z},
+                //                                                                  glm::vec3{v2.x, v2.y, v2.z}, glm::vec3{v3.x, v3.y, v3.z},
+                //                                                                  glm::vec3{0.0f, 0.0f, 1.0f},
+                //                                                                  glm::vec3{1.0f, 0.0f, 1.0f},
+                //                                                                  glm::vec3{0.0, 0.0, 0.0},
+                //                                                                  Type::GLASS)));
             }
             else
             {
@@ -124,5 +124,11 @@ void Scene::load(void)
                                                                                  Type::DIFFUSE)));
             }
         }
+
+        primitives_.push_back(Primitive::PrimitiveUniquePtr(new Sphere(glm::vec3{-0.3f, 0.60f, 0.0f}, glm::vec3{0.0f, 0.0f, 1.0f},
+                                                                       glm::vec3{1.0f, 0.0f, 0.0f}, glm::vec3{0.0f, 0.0f, 0.0f}, Type::GLASS, 0.3f)));
+
+        primitives_.push_back(Primitive::PrimitiveUniquePtr(new Sphere(glm::vec3{-0.3f, 0.60f, 0.0f}, glm::vec3{0.0f, 0.0f, 1.0f},
+                                                                       glm::vec3{0.0f, 0.85f, 0.0f}, glm::vec3{0.0f, 0.0f, 0.0f}, Type::METAL, 0.299f)));
     }
 }

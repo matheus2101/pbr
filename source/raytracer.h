@@ -22,7 +22,8 @@ public:
     glm::vec3 L(Ray &ray, unsigned depth);
     Ray get_new_ray(IntersectionRecord intersection_record);
     glm::vec3 cook_torrance(glm::vec3 wi, glm::vec3 wo, IntersectionRecord intersection_record);
-        private :
+    float rSchlick(glm::vec3 incident, glm::vec3 normal, float n1, float n2);
+    private :
 
         const Camera &camera_;
 

@@ -87,6 +87,21 @@ struct IntersectionRecord
 
         return newray;
     }
+
+    Ray get_refraction(Ray &ray, float n1, float n2)
+    {
+        float n = n1 / n2;
+        float cos1 = -glm::dot(this->normal_, ray.direction_);
+        float cos2 = 1.0 - n * n * (1.0f - cos1 * cos1);
+
+        cos2 = sqrt(cos2);
+        glm::vec3 direction = n * ray.direction_ + (n * cos1 - cos2) * this->normal_;
+
+        Ray new_ray;
+        new_ray = {this->position_ + 0.001f * direction, direction};
+
+        return new_ray;
+    }
 };
 
 #endif /* INTERSECTION_RECORD_H_ */

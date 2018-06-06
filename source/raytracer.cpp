@@ -4,8 +4,8 @@
 #include <omp.h>
 #include <glm/glm.hpp>
 
-unsigned num_samples = 200;
-unsigned max_depth = 5;
+unsigned num_samples = 500;
+unsigned max_depth = 10;
 
 RayTracer::RayTracer(Camera &camera,
                      const Scene &scene,
@@ -35,7 +35,6 @@ glm::vec3 RayTracer::cook_torrance(glm::vec3 wi, glm::vec3 wo, IntersectionRecor
     double m2 = m * m;
     double d1 = 1.0 / (M_PI * m2 * nh2 * nh2);
     double d2 = (nh2 - 1.0) / (m2 * nh2);
-    double D = d1 * glm::exp(d2);
 
     //Geometric term
 
@@ -57,6 +56,25 @@ glm::vec3 RayTracer::cook_torrance(glm::vec3 wi, glm::vec3 wo, IntersectionRecor
 
     //return ( F * D * G) / ( 4.0 * nwo * nwi );
     return (CT * cosnwo) / PDF;
+}
+
+float RayTracer::rSchlick(glm::vec3 incident, glm::vec3 normal, float n1, float n2)
+{
+    float Ro = (n1 - n2) / (n1 + n2);
+    Ro *= Ro;
+    float cosX = -glm::dot(normal, incident);
+    //cosX = cosX < 0.0f? -cosX : cosX;
+    if (n1 > n2)
+    {
+        float n = n1 / n2;
+        float cosT2 = 1.0f - n * n * (1.0f - cosX * cosX);
+        if (cosT2 < 0.0f) //TIR
+            return 1.0f;
+        cosX = sqrt(cosT2);
+    }
+
+    float x = 1.0f - cosX;
+    return Ro + (1.0f - Ro) * x * x * x * x * x;
 }
 
 void RayTracer::integrate(void)
@@ -149,9 +167,38 @@ glm::vec3 RayTracer::L(Ray &ray, unsigned depth)
             }
             else if (intersection_record.type_ == Type::METAL)
             {
-                Ray refl_ray = intersection_record.importance_sampling(ray.direction_, 0.0f);
+                Ray refl_ray = intersection_record.importance_sampling(ray.direction_, 0.75f);
                 L0 = intersection_record.emittance_ + 2.0f * glm::vec3(cook_torrance(glm::dvec3(refl_ray.direction_), glm::dvec3(ray.direction_), intersection_record)) *
                                                           L(refl_ray, ++depth) * glm::dot(intersection_record.normal_, refl_ray.direction_);
+            }
+            else if (intersection_record.type_ == Type::GLASS)
+            {
+                float cosX = glm::dot(ray.direction_, intersection_record.normal_);
+                float random = prng.get_rand(omp_get_thread_num());
+                float n1, n2;
+
+                if (cosX < 0.0f)
+                { //Ray is coming from the external media(n1) to internal media(n2)
+                    n1 = 1.0f;
+                    n2 = 1.5f;
+                }
+                else
+                { //Ray is coming from the internal media(n1) to external media(n2)
+                    n1 = 1.5f;
+                    n2 = 1.0f;
+                    intersection_record.normal_ = -intersection_record.normal_;
+                }
+
+                float schlick = rSchlick(ray.direction_, intersection_record.normal_, n1, n2);
+                Ray new_ray;
+
+                if (random < schlick) {
+                    new_ray = intersection_record.get_reflection(ray);
+                } else
+                {
+                    new_ray = intersection_record.get_refraction(ray, n1, n2);
+                }
+                L0 = L(new_ray, ++depth);
             }
         }
     }
