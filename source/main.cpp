@@ -16,7 +16,7 @@ int main(void)
         2.0f,
         2.5f,
         glm::ivec2{x_resolution, y_resolution},
-        glm::vec3{0.0f, 1.37f, 1.99f},  // position
+        glm::vec3{0.0f, 0.65f, 1.99f},  // position
         glm::vec3{0.0f, 1.0f, 0.0f},   // up
         glm::vec3{0.0f, 1.0f, -1.0f}}; // look at
     Scene scene{};
