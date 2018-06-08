@@ -52,3 +52,9 @@ Cornellbox com espelho na parede esquerda.</br>
 
 Variação da Cornellbox com espelhos e compressão gama.</br>
 ![Exemplo](https://raw.githubusercontent.com/matheus2101/pbr/master/exercises/gamma.jpg)</br>
+
+## Cook-Torrance, difusos e dielétricos
+
+Esfera Cook-Torrance e esfera difusa envolvidas por dielétrico.</br>
+![Exemplo](https://raw.githubusercontent.com/matheus2101/pbr/master/exercises/cooktorrance.jpg)
+![Exemplo](https://raw.githubusercontent.com/matheus2101/pbr/master/exercises/cooktorrance.jpg)</br>

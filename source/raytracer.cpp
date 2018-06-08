@@ -5,7 +5,7 @@
 #include <glm/glm.hpp>
 #include <cmath>
 
-unsigned num_samples = 2000;
+unsigned num_samples = 3200;
 unsigned max_depth = 10;
 
 RayTracer::RayTracer(Camera &camera,
@@ -26,7 +26,7 @@ glm::vec3 RayTracer::cook_torrance(glm::vec3 incident, glm::vec3 outgoing, Inter
     glm::dvec3 n = glm::dvec3{intersection_record.normal_};
 
     wo = -wo;
-    glm::dvec3 h = glm::normalize((wo + wi) / 2.0);
+    glm::dvec3 h = glm::normalize(wo + wi);
     double nh = glm::abs(glm::dot(n, h));
     double nwo = glm::abs(glm::dot(n, wo));
     double nwi = glm::abs(glm::dot(n, wi));
@@ -39,6 +39,10 @@ glm::vec3 RayTracer::cook_torrance(glm::vec3 incident, glm::vec3 outgoing, Inter
     double nh2 = nh * nh;
     double m2 = m * m;
 
+    double d1 = 1.0 / ( M_PI * m2 * nh2 * nh2 );
+    double d2 = ( nh2 - 1.0 ) / ( m2 * nh2 );
+    double D = d1 * exp( d2 );
+
     // geometric term
 
     double g1 = 2.0 * nh / hwo;
@@ -49,12 +53,14 @@ glm::vec3 RayTracer::cook_torrance(glm::vec3 incident, glm::vec3 outgoing, Inter
     glm::dvec3 F = R0 + (glm::dvec3(1.0) - R0) * pow((1.0 - hwi), 5);
 
     // cock-Torrance
-    glm::dvec3 ct = (F * G) / (4.0 * nwo * nwi);
+    glm::dvec3 ct = (F * G * D) / (4.0 * nwo * nwi);
 
     // pdf
-    double pdf = nh / (4.0 * hwi);
+    // double pdf = nh / (4.0 * hwi);
+    double om = glm::abs( glm::dot( wi, h ) );
+    double pdf = ( d1 * exp( d2 ) * nh ) / ( 4.0 * om );
 
-    return (ct * glm::dot(n, wo)) / pdf;
+    return (ct / pdf);
 }
 
 float RayTracer::schlick(glm::vec3 incident, glm::vec3 normal, float n1, float n2)
@@ -165,8 +171,8 @@ glm::vec3 RayTracer::L(Ray &ray, unsigned depth)
             }
             else if (intersection_record.type_ == Type::METAL)
             {
-                Ray refl_ray = intersection_record.importance_sampling(ray.direction_, 1.0f);
-                L0 = intersection_record.emittance_ + 2.0f * glm::vec3(cook_torrance(refl_ray.direction_, ray.direction_, intersection_record)) *
+                Ray refl_ray = intersection_record.importance_sampling(ray.direction_, 0.3f);
+                L0 = intersection_record.emittance_ + glm::vec3(cook_torrance(refl_ray.direction_, ray.direction_, intersection_record)) *
                                                           L(refl_ray, ++depth) * glm::dot(intersection_record.normal_, refl_ray.direction_);
             }
             else if (intersection_record.type_ == Type::GLASS)
@@ -192,6 +198,7 @@ glm::vec3 RayTracer::L(Ray &ray, unsigned depth)
 
                 if (random < schlick_) {
                     new_ray = intersection_record.get_reflection(ray);
+                    // new_ray = intersection_record.importance_sampling(ray.direction_, 1.0f);
                 } else
                 {
                     new_ray = intersection_record.get_refraction(ray, n1, n2);

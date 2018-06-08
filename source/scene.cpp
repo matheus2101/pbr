@@ -60,21 +60,21 @@ void Scene::load(void)
                                                                                  glm::vec3{v2.x, v2.y, v2.z}, glm::vec3{v3.x, v3.y, v3.z},
                                                                                  glm::vec3{0.0f, 1.0f, 0.0f},
                                                                                  glm::vec3{1.0f, 1.0f, 1.0f},
-                                                                                 glm::vec3{10.0, 10.0, 10.0},
+                                                                                 glm::vec3{12.0, 12.0, 12.0},
                                                                                  Type::DIFFUSE
                                                                                  )));
             } else if ((j == 4) || (j == 3)) { // walls & ceiling
                 primitives_.push_back(Primitive::PrimitiveUniquePtr(new Triangle(glm::vec3{v1.x, v1.y, v1.z},
                                                                                  glm::vec3{v2.x, v2.y, v2.z}, glm::vec3{v3.x, v3.y, v3.z},
                                                                                  glm::vec3{0.0f, 1.0f, 0.0f},
-                                                                                 glm::vec3{1.0f, 1.0f, 1.0f},
+                                                                                 glm::vec3{0.75f, 0.75f, 0.75f},
                                                                                  glm::vec3{0.0, 0.0, 0.0},
                                                                                  Type::DIFFUSE)));
             } else if (j == 2) { // floor
                 primitives_.push_back(Primitive::PrimitiveUniquePtr(new Triangle(glm::vec3{v1.x, v1.y, v1.z},
                                                                                  glm::vec3{v2.x, v2.y, v2.z}, glm::vec3{v3.x, v3.y, v3.z},
                                                                                  glm::vec3{0.0f, 1.0f, 0.0f},
-                                                                                 glm::vec3{1.0f, 1.0f, 0.0f},
+                                                                                 glm::vec3{0.75f, 0.75f, 0.25f},
                                                                                  glm::vec3{0.0, 0.0, 0.0},
                                                                                  Type::DIFFUSE)));
             }
@@ -82,8 +82,8 @@ void Scene::load(void)
             { // right wall
                 primitives_.push_back(Primitive::PrimitiveUniquePtr(new Triangle(glm::vec3{v1.x, v1.y, v1.z},
                                                                                  glm::vec3{v2.x, v2.y, v2.z}, glm::vec3{v3.x, v3.y, v3.z},
-                                                                                 glm::vec3{0.161f, 0.133f, 0.427f},
-                                                                                 glm::vec3{0.161f, 0.133f, 0.427f},
+                                                                                 glm::vec3{0.25f, 0.25f, 0.75f},
+                                                                                 glm::vec3{0.25f, 0.25f, 0.75f},
                                                                                  glm::vec3{0.0, 0.0, 0.0},
                                                                                  Type::DIFFUSE)));
             }
@@ -91,8 +91,8 @@ void Scene::load(void)
             { // left wall
                 primitives_.push_back(Primitive::PrimitiveUniquePtr(new Triangle(glm::vec3{v1.x, v1.y, v1.z},
                                                                                  glm::vec3{v2.x, v2.y, v2.z}, glm::vec3{v3.x, v3.y, v3.z},
-                                                                                 glm::vec3{0.427f, 0.133f, 0.161f},
-                                                                                 glm::vec3{0.427f, 0.133f, 0.161f},
+                                                                                 glm::vec3{0.75f, 0.25f, 0.25f},
+                                                                                 glm::vec3{0.75f, 0.25f, 0.25f},
                                                                                  glm::vec3{0.0, 0.0, 0.0},
                                                                                  Type::DIFFUSE)));
             }
@@ -125,10 +125,10 @@ void Scene::load(void)
             }
         }
 
-        primitives_.push_back(Primitive::PrimitiveUniquePtr(new Sphere(glm::vec3{-0.3f, 0.60f, 0.0f}, glm::vec3{0.0f, 0.0f, 1.0f},
+        primitives_.push_back(Primitive::PrimitiveUniquePtr(new Sphere(glm::vec3{-0.3f, 0.30f, 0.0f}, glm::vec3{0.0f, 0.0f, 1.0f},
                                                                        glm::vec3{1.0f, 0.0f, 0.0f}, glm::vec3{0.0f, 0.0f, 0.0f}, Type::GLASS, 0.3f)));
 
-        primitives_.push_back(Primitive::PrimitiveUniquePtr(new Sphere(glm::vec3{-0.3f, 0.60f, 0.0f}, glm::vec3{0.0f, 0.0f, 1.0f},
-                                                                       glm::vec3{0.0f, 0.85f, 0.0f}, glm::vec3{0.0f, 0.0f, 0.0f}, Type::METAL, 0.299f)));
+        primitives_.push_back(Primitive::PrimitiveUniquePtr(new Sphere(glm::vec3{-0.3f, 0.30f, 0.0f}, glm::vec3{0.0f, 0.0f, 1.0f},
+                                                                       glm::vec3{0.7f, 0.3f, 0.0f}, glm::vec3{0.0f, 0.0f, 0.0f}, Type::DIFFUSE, 0.28f)));
     }
 }
