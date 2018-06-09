@@ -26,6 +26,173 @@ void Scene::buildBVH(void)
     bvh_ = new BVH(primitives_);
 }
 
+void Scene::loadFinalScene(void)
+{
+    Assimp::Importer importer;
+
+    const aiScene *scene = importer.ReadFile("obj/breakfast_room/paredes.obj",
+                                             aiProcess_CalcTangentSpace |
+                                                 aiProcess_Triangulate |
+                                                 aiProcess_JoinIdenticalVertices |
+                                                 aiProcess_SortByPType);
+
+    for (unsigned int j = 0; j < scene->mNumMeshes; j++)
+    {
+        auto mesh = scene->mMeshes[j];
+
+        for (unsigned int i = 0; i < mesh->mNumFaces; i++)
+        {
+            auto face = mesh->mFaces[i];
+
+            auto v1 = mesh->mVertices[face.mIndices[0]];
+            auto v2 = mesh->mVertices[face.mIndices[1]];
+            auto v3 = mesh->mVertices[face.mIndices[2]];
+
+            primitives_.push_back(Primitive::PrimitiveUniquePtr(new Triangle(glm::vec3{v1.x, v1.y, v1.z},
+                                                                             glm::vec3{v2.x, v2.y, v2.z}, glm::vec3{v3.x, v3.y, v3.z},
+                                                                             glm::vec3{0.0f, 1.0f, 0.0f},
+                                                                             glm::vec3{1.0f, 1.0f, 1.0f},
+                                                                             glm::vec3{0.0, 0.0, 0.0},
+                                                                             Type::DIFFUSE)));
+        }
+    }
+
+    scene = importer.ReadFile("obj/breakfast_room/quadro.obj",
+                              aiProcess_CalcTangentSpace |
+                                  aiProcess_Triangulate |
+                                  aiProcess_JoinIdenticalVertices |
+                                  aiProcess_SortByPType);
+
+    for (unsigned int j = 0; j < scene->mNumMeshes; j++)
+    {
+        auto mesh = scene->mMeshes[j];
+
+        for (unsigned int i = 0; i < mesh->mNumFaces; i++)
+        {
+            auto face = mesh->mFaces[i];
+
+            auto v1 = mesh->mVertices[face.mIndices[0]];
+            auto v2 = mesh->mVertices[face.mIndices[1]];
+            auto v3 = mesh->mVertices[face.mIndices[2]];
+
+            primitives_.push_back(Primitive::PrimitiveUniquePtr(new Triangle(glm::vec3{v1.x, v1.y, v1.z},
+                                                                             glm::vec3{v2.x, v2.y, v2.z}, glm::vec3{v3.x, v3.y, v3.z},
+                                                                             glm::vec3{0.0f, 1.0f, 0.0f},
+                                                                             glm::vec3{1.0f, 1.0f, 1.0f},
+                                                                             glm::vec3{12.0, 12.0, 12.0},
+                                                                             Type::DIFFUSE)));
+        }
+    }
+
+    scene = importer.ReadFile("obj/breakfast_room/mesa.obj",
+                              aiProcess_CalcTangentSpace |
+                                  aiProcess_Triangulate |
+                                  aiProcess_JoinIdenticalVertices |
+                                  aiProcess_SortByPType);
+
+    for (unsigned int j = 0; j < scene->mNumMeshes; j++)
+    {
+        auto mesh = scene->mMeshes[j];
+
+        for (unsigned int i = 0; i < mesh->mNumFaces; i++)
+        {
+            auto face = mesh->mFaces[i];
+
+            auto v1 = mesh->mVertices[face.mIndices[0]];
+            auto v2 = mesh->mVertices[face.mIndices[1]];
+            auto v3 = mesh->mVertices[face.mIndices[2]];
+
+            primitives_.push_back(Primitive::PrimitiveUniquePtr(new Triangle(glm::vec3{v1.x, v1.y, v1.z},
+                                                                             glm::vec3{v2.x, v2.y, v2.z}, glm::vec3{v3.x, v3.y, v3.z},
+                                                                             glm::vec3{0.0f, 1.0f, 0.0f},
+                                                                             glm::vec3{1.0f, 1.0f, 1.0f},
+                                                                             glm::vec3{0.0, 0.0, 0.0},
+                                                                             Type::GLASS)));
+        }
+    }
+
+    scene = importer.ReadFile("obj/breakfast_room/suporte_mesa.obj",
+                              aiProcess_CalcTangentSpace |
+                                  aiProcess_Triangulate |
+                                  aiProcess_JoinIdenticalVertices |
+                                  aiProcess_SortByPType);
+
+    for (unsigned int j = 0; j < scene->mNumMeshes; j++)
+    {
+        auto mesh = scene->mMeshes[j];
+
+        for (unsigned int i = 0; i < mesh->mNumFaces; i++)
+        {
+            auto face = mesh->mFaces[i];
+
+            auto v1 = mesh->mVertices[face.mIndices[0]];
+            auto v2 = mesh->mVertices[face.mIndices[1]];
+            auto v3 = mesh->mVertices[face.mIndices[2]];
+
+            primitives_.push_back(Primitive::PrimitiveUniquePtr(new Triangle(glm::vec3{v1.x, v1.y, v1.z},
+                                                                             glm::vec3{v2.x, v2.y, v2.z}, glm::vec3{v3.x, v3.y, v3.z},
+                                                                             glm::vec3{0.0f, 1.0f, 0.0f},
+                                                                             glm::vec3{1.0f, 1.0f, 1.0f},
+                                                                             glm::vec3{0.0, 0.0, 0.0},
+                                                                             Type::DIFFUSE)));
+        }
+    }
+
+    // scene = importer.ReadFile("obj/breakfast_room/pes_mesas.obj",
+    //                           aiProcess_CalcTangentSpace |
+    //                               aiProcess_Triangulate |
+    //                               aiProcess_JoinIdenticalVertices |
+    //                               aiProcess_SortByPType);
+
+    // for (unsigned int j = 0; j < scene->mNumMeshes; j++)
+    // {
+    //     auto mesh = scene->mMeshes[j];
+
+    //     for (unsigned int i = 0; i < mesh->mNumFaces; i++)
+    //     {
+    //         auto face = mesh->mFaces[i];
+
+    //         auto v1 = mesh->mVertices[face.mIndices[0]];
+    //         auto v2 = mesh->mVertices[face.mIndices[1]];
+    //         auto v3 = mesh->mVertices[face.mIndices[2]];
+
+    //         primitives_.push_back(Primitive::PrimitiveUniquePtr(new Triangle(glm::vec3{v1.x, v1.y, v1.z},
+    //                                                                          glm::vec3{v2.x, v2.y, v2.z}, glm::vec3{v3.x, v3.y, v3.z},
+    //                                                                          glm::vec3{0.0f, 1.0f, 0.0f},
+    //                                                                          glm::vec3{1.0f, 1.0f, 1.0f},
+    //                                                                          glm::vec3{12.0, 12.0, 12.0},
+    //                                                                          Type::DIFFUSE)));
+    //     }
+    // }
+
+    scene = importer.ReadFile("obj/breakfast_room/cadeiras.obj",
+                              aiProcess_CalcTangentSpace |
+                                  aiProcess_Triangulate |
+                                  aiProcess_JoinIdenticalVertices |
+                                  aiProcess_SortByPType);
+
+    for (unsigned int j = 0; j < scene->mNumMeshes; j++)
+    {
+        auto mesh = scene->mMeshes[j];
+
+        for (unsigned int i = 0; i < mesh->mNumFaces; i++)
+        {
+            auto face = mesh->mFaces[i];
+
+            auto v1 = mesh->mVertices[face.mIndices[0]];
+            auto v2 = mesh->mVertices[face.mIndices[1]];
+            auto v3 = mesh->mVertices[face.mIndices[2]];
+
+            primitives_.push_back(Primitive::PrimitiveUniquePtr(new Triangle(glm::vec3{v1.x, v1.y, v1.z},
+                                                                             glm::vec3{v2.x, v2.y, v2.z}, glm::vec3{v3.x, v3.y, v3.z},
+                                                                             glm::vec3{0.0f, 1.0f, 0.0f},
+                                                                             glm::vec3{1.0f, 1.0f, 1.0f},
+                                                                             glm::vec3{0.0, 0.0, 0.0},
+                                                                             Type::DIFFUSE)));
+        }
+    }
+}
+
 void Scene::load(void)
 {
 
@@ -55,22 +222,26 @@ void Scene::load(void)
             auto v2 = mesh->mVertices[face.mIndices[1]];
             auto v3 = mesh->mVertices[face.mIndices[2]];
 
-            if (j == 7) { // lamp
+            if (j == 7)
+            { // lamp
                 primitives_.push_back(Primitive::PrimitiveUniquePtr(new Triangle(glm::vec3{v1.x, v1.y, v1.z},
                                                                                  glm::vec3{v2.x, v2.y, v2.z}, glm::vec3{v3.x, v3.y, v3.z},
                                                                                  glm::vec3{0.0f, 1.0f, 0.0f},
                                                                                  glm::vec3{1.0f, 1.0f, 1.0f},
                                                                                  glm::vec3{12.0, 12.0, 12.0},
-                                                                                 Type::DIFFUSE
-                                                                                 )));
-            } else if ((j == 4) || (j == 3)) { // walls & ceiling
+                                                                                 Type::DIFFUSE)));
+            }
+            else if ((j == 4) || (j == 3))
+            { // walls & ceiling
                 primitives_.push_back(Primitive::PrimitiveUniquePtr(new Triangle(glm::vec3{v1.x, v1.y, v1.z},
                                                                                  glm::vec3{v2.x, v2.y, v2.z}, glm::vec3{v3.x, v3.y, v3.z},
                                                                                  glm::vec3{0.0f, 1.0f, 0.0f},
                                                                                  glm::vec3{0.75f, 0.75f, 0.75f},
                                                                                  glm::vec3{0.0, 0.0, 0.0},
                                                                                  Type::DIFFUSE)));
-            } else if (j == 2) { // floor
+            }
+            else if (j == 2)
+            { // floor
                 primitives_.push_back(Primitive::PrimitiveUniquePtr(new Triangle(glm::vec3{v1.x, v1.y, v1.z},
                                                                                  glm::vec3{v2.x, v2.y, v2.z}, glm::vec3{v3.x, v3.y, v3.z},
                                                                                  glm::vec3{0.0f, 1.0f, 0.0f},

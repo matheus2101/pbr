@@ -27,6 +27,7 @@ public:
                     IntersectionRecord &intersection_record ) const;
 
     void load( void );
+    void loadFinalScene ( void );
     void buildBVH(void);
 
     std::vector< Primitive::PrimitiveUniquePtr > primitives_;
