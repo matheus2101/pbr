@@ -5,7 +5,7 @@
 #include <glm/glm.hpp>
 #include <cmath>
 
-unsigned num_samples = 100;
+unsigned num_samples = 20;
 unsigned max_depth = 10;
 
 RayTracer::RayTracer(Camera &camera,
@@ -141,6 +141,7 @@ glm::vec3 RayTracer::L(Ray &ray, unsigned depth)
     {
         if (scene_.intersect(ray, intersection_record))
         {
+            float p = glm::max(intersection_record.brdf_[0], glm::max(intersection_record.brdf_[1], intersection_record.brdf_[2]));
             if (intersection_record.type_ == Type::DIFFUSE)
             {
                 Ray refl_ray = intersection_record.get_new_ray();
@@ -155,8 +156,15 @@ glm::vec3 RayTracer::L(Ray &ray, unsigned depth)
 
                 if (intersection_record.emittance_ == glm::vec3{0.0f, 0.0f, 0.0f})
                 {
-                    L0 = intersection_record.emittance_ + 2.0f * ((float)M_PI) * intersection_record.brdf_ *
+                    if (depth >= 5 && prng.get_rand(omp_get_thread_num()) > p)
+                    {
+                        // L0 = intersection_record.emittance_ + 2.0f * ((float)M_PI) * (intersection_record.brdf_/p) * cos_;
+                    }
+                    else
+                    {
+                        L0 = intersection_record.emittance_ + 2.0f * ((float)M_PI) * (intersection_record.brdf_) *
                                                               L(refl_ray, ++depth) * cos_;
+                    }
                 }
                 else
                 {
@@ -172,8 +180,16 @@ glm::vec3 RayTracer::L(Ray &ray, unsigned depth)
             else if (intersection_record.type_ == Type::METAL)
             {
                 Ray refl_ray = intersection_record.importance_sampling(ray.direction_, 0.3f);
-                L0 = intersection_record.emittance_ + glm::vec3(cook_torrance(refl_ray.direction_, ray.direction_, intersection_record)) *
+                if (depth >= 5 && prng.get_rand(omp_get_thread_num()) > p)
+                {
+                    // L0 = intersection_record.emittance_ + glm::vec3(cook_torrance(refl_ray.direction_, ray.direction_, intersection_record)/p) *
+                                                        //   glm::dot(intersection_record.normal_, refl_ray.direction_);
+                }
+                else
+                {
+                    L0 = intersection_record.emittance_ + glm::vec3(cook_torrance(refl_ray.direction_, ray.direction_, intersection_record)) *
                                                           L(refl_ray, ++depth) * glm::dot(intersection_record.normal_, refl_ray.direction_);
+                }
             }
             else if (intersection_record.type_ == Type::GLASS)
             {

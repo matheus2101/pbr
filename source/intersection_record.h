@@ -54,7 +54,7 @@ struct IntersectionRecord
         float r2 = prng.get_rand(omp_get_thread_num());
 
         float phi = 2 * (float)M_PI * r2;
-        float theta = atan(sqrt(-(alpha * alpha) * log(1 - r1)));
+        float theta = atan(sqrt(-(alpha * alpha) * log(1.0f - r1)));
         glm::vec3 m = glm::vec3{cos(phi) * sin(theta), cos(theta), sin(phi) * sin(theta)};
 
         ONB onb;
