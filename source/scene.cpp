@@ -51,7 +51,7 @@ void Scene::loadFinalScene(void)
             primitives_.push_back(Primitive::PrimitiveUniquePtr(new Triangle(glm::vec3{v1.x, v1.y, v1.z},
                                                                              glm::vec3{v2.x, v2.y, v2.z}, glm::vec3{v3.x, v3.y, v3.z},
                                                                              glm::vec3{0.0f, 1.0f, 0.0f},
-                                                                             glm::vec3{1.0f, 1.0f, 1.0f},
+                                                                             glm::vec3{0.725f, 0.827f, 0.933f},
                                                                              glm::vec3{0.0, 0.0, 0.0},
                                                                              Type::DIFFUSE)));
         }
@@ -78,7 +78,7 @@ void Scene::loadFinalScene(void)
             primitives_.push_back(Primitive::PrimitiveUniquePtr(new Triangle(glm::vec3{v1.x, v1.y, v1.z},
                                                                              glm::vec3{v2.x, v2.y, v2.z}, glm::vec3{v3.x, v3.y, v3.z},
                                                                              glm::vec3{0.0f, 1.0f, 0.0f},
-                                                                             glm::vec3{1.0f, 1.0f, 1.0f},
+                                                                             glm::vec3{0.725f, 0.827f, 0.933f},
                                                                              glm::vec3{0.0, 0.0, 0.0},
                                                                              Type::DIFFUSE)));
         }
@@ -105,7 +105,7 @@ void Scene::loadFinalScene(void)
             primitives_.push_back(Primitive::PrimitiveUniquePtr(new Triangle(glm::vec3{v1.x, v1.y, v1.z},
                                                                              glm::vec3{v2.x, v2.y, v2.z}, glm::vec3{v3.x, v3.y, v3.z},
                                                                              glm::vec3{0.0f, 1.0f, 0.0f},
-                                                                             glm::vec3{1.0f, 1.0f, 1.0f},
+                                                                             glm::vec3{0.725f, 0.827f, 0.933f},
                                                                              glm::vec3{0.0, 0.0, 0.0},
                                                                              Type::DIFFUSE)));
         }
@@ -132,7 +132,7 @@ void Scene::loadFinalScene(void)
             primitives_.push_back(Primitive::PrimitiveUniquePtr(new Triangle(glm::vec3{v1.x, v1.y, v1.z},
                                                                              glm::vec3{v2.x, v2.y, v2.z}, glm::vec3{v3.x, v3.y, v3.z},
                                                                              glm::vec3{0.0f, 1.0f, 0.0f},
-                                                                             glm::vec3{1.0f, 1.0f, 1.0f},
+                                                                             glm::vec3{0.725f, 0.827f, 0.933f},
                                                                              glm::vec3{0.0, 0.0, 0.0},
                                                                              Type::DIFFUSE)));
         }
@@ -240,9 +240,36 @@ void Scene::loadFinalScene(void)
             primitives_.push_back(Primitive::PrimitiveUniquePtr(new Triangle(glm::vec3{v1.x, v1.y, v1.z},
                                                                              glm::vec3{v2.x, v2.y, v2.z}, glm::vec3{v3.x, v3.y, v3.z},
                                                                              glm::vec3{0.0f, 1.0f, 0.0f},
+                                                                             glm::vec3{0.36f, 0.2f, 0.09f},
+                                                                             glm::vec3{0.0, 0.0, 0.0},
+                                                                             Type::METAL, 0.3f)));
+        }
+    }
+
+    scene = importer.ReadFile("obj/breakfast_room/pes_mesa_borda.obj",
+                              aiProcess_CalcTangentSpace |
+                                  aiProcess_Triangulate |
+                                  aiProcess_JoinIdenticalVertices |
+                                  aiProcess_SortByPType);
+
+    for (unsigned int j = 0; j < scene->mNumMeshes; j++)
+    {
+        auto mesh = scene->mMeshes[j];
+
+        for (unsigned int i = 0; i < mesh->mNumFaces; i++)
+        {
+            auto face = mesh->mFaces[i];
+
+            auto v1 = mesh->mVertices[face.mIndices[0]];
+            auto v2 = mesh->mVertices[face.mIndices[1]];
+            auto v3 = mesh->mVertices[face.mIndices[2]];
+
+            primitives_.push_back(Primitive::PrimitiveUniquePtr(new Triangle(glm::vec3{v1.x, v1.y, v1.z},
+                                                                             glm::vec3{v2.x, v2.y, v2.z}, glm::vec3{v3.x, v3.y, v3.z},
+                                                                             glm::vec3{0.0f, 1.0f, 0.0f},
                                                                              glm::vec3{1.0f, 1.0f, 1.0f},
                                                                              glm::vec3{0.0, 0.0, 0.0},
-                                                                             Type::METAL)));
+                                                                             Type::GLASS)));
         }
     }
 
@@ -539,7 +566,7 @@ void Scene::loadFinalScene(void)
                                                                              glm::vec3{0.0f, 1.0f, 0.0f},
                                                                              glm::vec3{1.0f, 1.0f, 1.0f},
                                                                              glm::vec3{0.0, 0.0, 0.0},
-                                                                             Type::METAL)));
+                                                                             Type::METAL, 0.1f)));
         }
     }
 
@@ -672,9 +699,9 @@ void Scene::loadFinalScene(void)
             primitives_.push_back(Primitive::PrimitiveUniquePtr(new Triangle(glm::vec3{v1.x, v1.y, v1.z},
                                                                              glm::vec3{v2.x, v2.y, v2.z}, glm::vec3{v3.x, v3.y, v3.z},
                                                                              glm::vec3{0.0f, 1.0f, 0.0f},
-                                                                             glm::vec3{1.0f, 1.0f, 1.0f},
+                                                                             glm::vec3{0.722f, 0.537f, 0.043f},
                                                                              glm::vec3{0.0, 0.0, 0.0},
-                                                                             Type::METAL)));
+                                                                             Type::METAL, 0.05f)));
         }
     }
 
@@ -755,9 +782,10 @@ void Scene::loadFinalScene(void)
                                                                              glm::vec3{0.0f, 1.0f, 0.0f},
                                                                              glm::vec3{0.6f, 0.6f, 0.6f},
                                                                              glm::vec3{0.0f, 0.0f, 0.0f},
-                                                                             Type::METAL)));
+                                                                             Type::METAL, 0.2f)));
         }
     }
+    
 
     scene = importer.ReadFile("obj/breakfast_room/lampada1.obj",
                               aiProcess_CalcTangentSpace |

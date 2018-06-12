@@ -13,12 +13,15 @@ public:
     Triangle( void) = delete;
     Triangle( const glm::vec3 v1, const glm::vec3 v2,
      const glm::vec3 v3, const glm::vec3 color, const glm::vec3 brdf, const glm::vec3 emittance, Type type);
+    Triangle(const glm::vec3 v1, const glm::vec3 v2,
+             const glm::vec3 v3, const glm::vec3 color, const glm::vec3 brdf, const glm::vec3 emittance, Type type, float roughness);
     bool intersect( const Ray &ray,
                     IntersectionRecord &intersection_record ) const;
 
     AABB getAABB(void) const;
 
     glm::vec3 v0_, v1_, v2_;
+    float roughness_;
 };
 
 #endif

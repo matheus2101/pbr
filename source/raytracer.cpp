@@ -5,7 +5,7 @@
 #include <glm/glm.hpp>
 #include <cmath>
 
-unsigned num_samples = 20;
+unsigned num_samples = 50;
 unsigned max_depth = 10;
 
 RayTracer::RayTracer(Camera &camera,
@@ -35,7 +35,7 @@ glm::vec3 RayTracer::cook_torrance(glm::vec3 incident, glm::vec3 outgoing, Inter
 
     // beckmann
 
-    double m = 0.3;
+    double m = intersection_record.roughness_;
     double nh2 = nh * nh;
     double m2 = m * m;
 
@@ -179,7 +179,7 @@ glm::vec3 RayTracer::L(Ray &ray, unsigned depth)
             }
             else if (intersection_record.type_ == Type::METAL)
             {
-                Ray refl_ray = intersection_record.importance_sampling(ray.direction_, 0.3f);
+                Ray refl_ray = intersection_record.importance_sampling(ray.direction_, intersection_record.roughness_);
                 if (depth >= 5 && prng.get_rand(omp_get_thread_num()) > p)
                 {
                     // L0 = intersection_record.emittance_ + glm::vec3(cook_torrance(refl_ray.direction_, ray.direction_, intersection_record)/p) *

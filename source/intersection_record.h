@@ -24,6 +24,7 @@ struct IntersectionRecord
     glm::vec3 brdf_;
     glm::vec3 emittance_;
     Type type_;
+    float roughness_;
 
     Ray get_new_ray()
     {
