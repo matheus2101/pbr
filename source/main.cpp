@@ -6,15 +6,15 @@ PRNG prng;
 
 int main(void)
 {
-    unsigned int x_resolution = 1920;
-    unsigned int y_resolution = 1080;
+    unsigned int x_resolution = 1280;
+    unsigned int y_resolution = 720;
 
     PinholeCamera camera{
-        -4.0f,
-        4.0f,
-        -2.25f,
-        2.25f,
-        4.0f,
+        -3.2f,
+        3.2f,
+        -1.8f,
+        1.8f,
+        2.5f,
         glm::ivec2{x_resolution, y_resolution},
         glm::vec3{-0.70f, 2.8f, 3.25f},  // position
         glm::vec3{0.0f, 1.0f, 0.0f},     // up
