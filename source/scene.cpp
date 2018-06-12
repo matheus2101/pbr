@@ -753,9 +753,9 @@ void Scene::loadFinalScene(void)
             primitives_.push_back(Primitive::PrimitiveUniquePtr(new Triangle(glm::vec3{v1.x, v1.y, v1.z},
                                                                              glm::vec3{v2.x, v2.y, v2.z}, glm::vec3{v3.x, v3.y, v3.z},
                                                                              glm::vec3{0.0f, 1.0f, 0.0f},
-                                                                             glm::vec3{1.0f, 1.0f, 1.0f},
+                                                                             glm::vec3{0.6f, 0.6f, 0.6f},
                                                                              glm::vec3{0.0f, 0.0f, 0.0f},
-                                                                             Type::DIFFUSE)));
+                                                                             Type::METAL)));
         }
     }
 

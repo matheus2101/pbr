@@ -6,8 +6,8 @@ PRNG prng;
 
 int main(void)
 {
-    unsigned int x_resolution = 512;
-    unsigned int y_resolution = 512;
+    unsigned int x_resolution = 700;
+    unsigned int y_resolution = 700;
 
     PinholeCamera camera{
         -2.0f,
