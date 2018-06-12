@@ -242,7 +242,7 @@ void Scene::loadFinalScene(void)
                                                                              glm::vec3{0.0f, 1.0f, 0.0f},
                                                                              glm::vec3{1.0f, 1.0f, 1.0f},
                                                                              glm::vec3{0.0, 0.0, 0.0},
-                                                                             Type::DIFFUSE)));
+                                                                             Type::METAL)));
         }
     }
 
@@ -462,6 +462,60 @@ void Scene::loadFinalScene(void)
         }
     }
 
+    scene = importer.ReadFile("obj/breakfast_room/luminaria_borda1.obj",
+                              aiProcess_CalcTangentSpace |
+                                  aiProcess_Triangulate |
+                                  aiProcess_JoinIdenticalVertices |
+                                  aiProcess_SortByPType);
+
+    for (unsigned int j = 0; j < scene->mNumMeshes; j++)
+    {
+        auto mesh = scene->mMeshes[j];
+
+        for (unsigned int i = 0; i < mesh->mNumFaces; i++)
+        {
+            auto face = mesh->mFaces[i];
+
+            auto v1 = mesh->mVertices[face.mIndices[0]];
+            auto v2 = mesh->mVertices[face.mIndices[1]];
+            auto v3 = mesh->mVertices[face.mIndices[2]];
+
+            primitives_.push_back(Primitive::PrimitiveUniquePtr(new Triangle(glm::vec3{v1.x, v1.y, v1.z},
+                                                                             glm::vec3{v2.x, v2.y, v2.z}, glm::vec3{v3.x, v3.y, v3.z},
+                                                                             glm::vec3{0.0f, 1.0f, 0.0f},
+                                                                             glm::vec3{0.85f, 0.85f, 0.0f},
+                                                                             glm::vec3{0.0, 0.0, 0.0},
+                                                                             Type::GLASS)));
+        }
+    }
+
+    scene = importer.ReadFile("obj/breakfast_room/luminaria_borda2.obj",
+                              aiProcess_CalcTangentSpace |
+                                  aiProcess_Triangulate |
+                                  aiProcess_JoinIdenticalVertices |
+                                  aiProcess_SortByPType);
+
+    for (unsigned int j = 0; j < scene->mNumMeshes; j++)
+    {
+        auto mesh = scene->mMeshes[j];
+
+        for (unsigned int i = 0; i < mesh->mNumFaces; i++)
+        {
+            auto face = mesh->mFaces[i];
+
+            auto v1 = mesh->mVertices[face.mIndices[0]];
+            auto v2 = mesh->mVertices[face.mIndices[1]];
+            auto v3 = mesh->mVertices[face.mIndices[2]];
+
+            primitives_.push_back(Primitive::PrimitiveUniquePtr(new Triangle(glm::vec3{v1.x, v1.y, v1.z},
+                                                                             glm::vec3{v2.x, v2.y, v2.z}, glm::vec3{v3.x, v3.y, v3.z},
+                                                                             glm::vec3{0.0f, 1.0f, 0.0f},
+                                                                             glm::vec3{0.85f, 0.85f, 0.0f},
+                                                                             glm::vec3{0.0, 0.0, 0.0},
+                                                                             Type::GLASS)));
+        }
+    }
+
     scene = importer.ReadFile("obj/breakfast_room/teapot.obj",
                               aiProcess_CalcTangentSpace |
                                   aiProcess_Triangulate |
@@ -516,6 +570,33 @@ void Scene::loadFinalScene(void)
         }
     }
 
+    scene = importer.ReadFile("obj/breakfast_room/xicaras_borda.obj",
+                              aiProcess_CalcTangentSpace |
+                                  aiProcess_Triangulate |
+                                  aiProcess_JoinIdenticalVertices |
+                                  aiProcess_SortByPType);
+
+    for (unsigned int j = 0; j < scene->mNumMeshes; j++)
+    {
+        auto mesh = scene->mMeshes[j];
+
+        for (unsigned int i = 0; i < mesh->mNumFaces; i++)
+        {
+            auto face = mesh->mFaces[i];
+
+            auto v1 = mesh->mVertices[face.mIndices[0]];
+            auto v2 = mesh->mVertices[face.mIndices[1]];
+            auto v3 = mesh->mVertices[face.mIndices[2]];
+
+            primitives_.push_back(Primitive::PrimitiveUniquePtr(new Triangle(glm::vec3{v1.x, v1.y, v1.z},
+                                                                             glm::vec3{v2.x, v2.y, v2.z}, glm::vec3{v3.x, v3.y, v3.z},
+                                                                             glm::vec3{0.0f, 1.0f, 0.0f},
+                                                                             glm::vec3{1.0f, 1.0f, 1.0f},
+                                                                             glm::vec3{0.0, 0.0, 0.0},
+                                                                             Type::GLASS)));
+        }
+    }
+
     scene = importer.ReadFile("obj/breakfast_room/pratos.obj",
                               aiProcess_CalcTangentSpace |
                                   aiProcess_Triangulate |
@@ -540,6 +621,33 @@ void Scene::loadFinalScene(void)
                                                                              glm::vec3{1.0f, 1.0f, 1.0f},
                                                                              glm::vec3{0.0, 0.0, 0.0},
                                                                              Type::DIFFUSE)));
+        }
+    }
+
+    scene = importer.ReadFile("obj/breakfast_room/pratos_borda.obj",
+                              aiProcess_CalcTangentSpace |
+                                  aiProcess_Triangulate |
+                                  aiProcess_JoinIdenticalVertices |
+                                  aiProcess_SortByPType);
+
+    for (unsigned int j = 0; j < scene->mNumMeshes; j++)
+    {
+        auto mesh = scene->mMeshes[j];
+
+        for (unsigned int i = 0; i < mesh->mNumFaces; i++)
+        {
+            auto face = mesh->mFaces[i];
+
+            auto v1 = mesh->mVertices[face.mIndices[0]];
+            auto v2 = mesh->mVertices[face.mIndices[1]];
+            auto v3 = mesh->mVertices[face.mIndices[2]];
+
+            primitives_.push_back(Primitive::PrimitiveUniquePtr(new Triangle(glm::vec3{v1.x, v1.y, v1.z},
+                                                                             glm::vec3{v2.x, v2.y, v2.z}, glm::vec3{v3.x, v3.y, v3.z},
+                                                                             glm::vec3{0.0f, 1.0f, 0.0f},
+                                                                             glm::vec3{1.0f, 1.0f, 1.0f},
+                                                                             glm::vec3{0.0, 0.0, 0.0},
+                                                                             Type::GLASS)));
         }
     }
 
@@ -594,6 +702,33 @@ void Scene::loadFinalScene(void)
                                                                              glm::vec3{1.0f, 1.0f, 1.0f},
                                                                              glm::vec3{0.0, 0.0, 0.0},
                                                                              Type::DIFFUSE)));
+        }
+    }
+
+    scene = importer.ReadFile("obj/breakfast_room/jarra_borda.obj",
+                              aiProcess_CalcTangentSpace |
+                                  aiProcess_Triangulate |
+                                  aiProcess_JoinIdenticalVertices |
+                                  aiProcess_SortByPType);
+
+    for (unsigned int j = 0; j < scene->mNumMeshes; j++)
+    {
+        auto mesh = scene->mMeshes[j];
+
+        for (unsigned int i = 0; i < mesh->mNumFaces; i++)
+        {
+            auto face = mesh->mFaces[i];
+
+            auto v1 = mesh->mVertices[face.mIndices[0]];
+            auto v2 = mesh->mVertices[face.mIndices[1]];
+            auto v3 = mesh->mVertices[face.mIndices[2]];
+
+            primitives_.push_back(Primitive::PrimitiveUniquePtr(new Triangle(glm::vec3{v1.x, v1.y, v1.z},
+                                                                             glm::vec3{v2.x, v2.y, v2.z}, glm::vec3{v3.x, v3.y, v3.z},
+                                                                             glm::vec3{0.0f, 1.0f, 0.0f},
+                                                                             glm::vec3{1.0f, 1.0f, 1.0f},
+                                                                             glm::vec3{0.0, 0.0, 0.0},
+                                                                             Type::GLASS)));
         }
     }
 
