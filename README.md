@@ -58,3 +58,8 @@ Variação da Cornellbox com espelhos e compressão gama.</br>
 Esfera Cook-Torrance e esfera difusa envolvidas por dielétrico.</br>
 ![Exemplo](https://raw.githubusercontent.com/matheus2101/pbr/master/exercises/cooktorrance.jpg)
 ![Exemplo](https://raw.githubusercontent.com/matheus2101/pbr/master/exercises/diffuse.jpg)</br>
+
+## Imagem final
+
+Imagem final gerada com 8.000 amostras e aproximadamente 55 horas.</br>
+![Exemplo](https://raw.githubusercontent.com/matheus2101/pbr/master/exercises/final_image.jpg)</br>
