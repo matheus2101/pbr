@@ -5,7 +5,7 @@
 #include <glm/glm.hpp>
 #include <cmath>
 
-unsigned num_samples = 5000;
+unsigned num_samples = 50;
 unsigned max_depth = 10;
 
 RayTracer::RayTracer(Camera &camera,
@@ -137,8 +137,8 @@ glm::vec3 RayTracer::L(Ray &ray, unsigned depth)
     IntersectionRecord intersection_record;
     intersection_record.t_ = std::numeric_limits<double>::max();
 
-    if (depth < max_depth)
-    {
+    // if (depth < max_depth)
+    // {
         if (scene_.intersect(ray, intersection_record))
         {
             float p = glm::max(intersection_record.brdf_[0], glm::max(intersection_record.brdf_[1], intersection_record.brdf_[2]));
@@ -156,7 +156,7 @@ glm::vec3 RayTracer::L(Ray &ray, unsigned depth)
 
                 if (intersection_record.emittance_ == glm::vec3{0.0f, 0.0f, 0.0f})
                 {
-                    if (depth >= 5 && prng.get_rand(omp_get_thread_num()) > p)
+                    if (depth >= 3 && prng.get_rand(omp_get_thread_num()) > p)
                     {
                         // L0 = intersection_record.emittance_ + 2.0f * ((float)M_PI) * (intersection_record.brdf_/p) * cos_;
                     }
@@ -180,7 +180,7 @@ glm::vec3 RayTracer::L(Ray &ray, unsigned depth)
             else if (intersection_record.type_ == Type::METAL)
             {
                 Ray refl_ray = intersection_record.importance_sampling(ray.direction_, intersection_record.roughness_);
-                if (depth >= 5 && prng.get_rand(omp_get_thread_num()) > p)
+                if (depth >= 3 && prng.get_rand(omp_get_thread_num()) > p)
                 {
                     // L0 = intersection_record.emittance_ + glm::vec3(cook_torrance(refl_ray.direction_, ray.direction_, intersection_record)/p) *
                                                         //   glm::dot(intersection_record.normal_, refl_ray.direction_);
@@ -214,7 +214,6 @@ glm::vec3 RayTracer::L(Ray &ray, unsigned depth)
 
                 if (random < schlick_) {
                     new_ray = intersection_record.get_reflection(ray);
-                    // new_ray = intersection_record.importance_sampling(ray.direction_, 1.0f);
                 } else
                 {
                     new_ray = intersection_record.get_refraction(ray, n1, n2);
@@ -222,7 +221,7 @@ glm::vec3 RayTracer::L(Ray &ray, unsigned depth)
                 L0 = L(new_ray, ++depth);
             }
         }
-    }
+    // }
 
     return L0;
 }
