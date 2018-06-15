@@ -5,7 +5,11 @@
 #include <glm/glm.hpp>
 #include <cmath>
 
+<<<<<<< HEAD
 unsigned num_samples = 50;
+=======
+unsigned num_samples = 2000;
+>>>>>>> d919d6890a6643ecfb03751bdd14dc2ebc824c82
 unsigned max_depth = 10;
 
 RayTracer::RayTracer(Camera &camera,
