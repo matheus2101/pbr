@@ -877,7 +877,7 @@ void Scene::load(void)
                                                                                  glm::vec3{v2.x, v2.y, v2.z}, glm::vec3{v3.x, v3.y, v3.z},
                                                                                  glm::vec3{0.0f, 1.0f, 0.0f},
                                                                                  glm::vec3{0.8f, 0.8f, 0.8f},
-                                                                                 glm::vec3{12.0, 12.0, 12.0},
+                                                                                 glm::vec3{15.0, 15.0, 15.0},
                                                                                  Type::DIFFUSE)));
             }
             else if ((j == 4) || (j == 3))
@@ -945,10 +945,16 @@ void Scene::load(void)
             }
         }
 
-        primitives_.push_back(Primitive::PrimitiveUniquePtr(new Sphere(glm::vec3{-0.3f, 0.30f, 0.0f}, glm::vec3{0.0f, 0.0f, 1.0f},
+        primitives_.push_back(Primitive::PrimitiveUniquePtr(new Sphere(glm::vec3{0.3f, 0.30f, 0.2f}, glm::vec3{0.0f, 0.0f, 1.0f},
                                                                        glm::vec3{1.0f, 0.0f, 0.0f}, glm::vec3{0.0f, 0.0f, 0.0f}, Type::GLASS, 0.3f)));
 
-        primitives_.push_back(Primitive::PrimitiveUniquePtr(new Sphere(glm::vec3{-0.3f, 0.30f, 0.0f}, glm::vec3{0.0f, 0.0f, 1.0f},
-                                                                       glm::vec3{0.7f, 0.3f, 0.0f}, glm::vec3{0.0f, 0.0f, 0.0f}, Type::DIFFUSE, 0.28f)));
+        primitives_.push_back(Primitive::PrimitiveUniquePtr(new Sphere(glm::vec3{-0.3f, 0.30f, -0.2f}, glm::vec3{0.0f, 0.0f, 1.0f},
+                                                                       glm::vec3{0.7f, 0.3f, 0.0f}, glm::vec3{0.0f, 0.0f, 0.0f}, Type::DIFFUSE, 0.3f)));
+
+        primitives_.push_back(Primitive::PrimitiveUniquePtr(new Sphere(glm::vec3{-0.3f, 1.0f, -0.2f}, glm::vec3{0.0f, 0.0f, 1.0f},
+                                                                       glm::vec3{0.7f, 0.3f, 0.0f}, glm::vec3{0.0f, 0.0f, 0.0f}, Type::MIRROR, 0.3f)));
+
+        // primitives_.push_back(Primitive::PrimitiveUniquePtr(new Sphere(glm::vec3{-0.3f, 0.90f, -0.2f}, glm::vec3{0.0f, 0.0f, 1.0f},
+                                                                    //    glm::vec3{0.7f, 0.3f, 0.0f}, glm::vec3{0.0f, 0.0f, 0.0f}, Type::DIFFUSE, 0.3f)));
     }
 }

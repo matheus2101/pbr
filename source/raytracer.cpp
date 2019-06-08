@@ -5,7 +5,7 @@
 #include <glm/glm.hpp>
 #include <cmath>
 
-unsigned num_samples = 2000;
+unsigned num_samples = 500;
 unsigned max_depth = 10;
 
 RayTracer::RayTracer(Camera &camera,
@@ -137,8 +137,8 @@ glm::vec3 RayTracer::L(Ray &ray, unsigned depth)
     IntersectionRecord intersection_record;
     intersection_record.t_ = std::numeric_limits<double>::max();
 
-    // if (depth < max_depth)
-    // {
+    if (depth < max_depth)
+    {
         if (scene_.intersect(ray, intersection_record))
         {
             float p = glm::max(intersection_record.brdf_[0], glm::max(intersection_record.brdf_[1], intersection_record.brdf_[2]));
@@ -159,6 +159,11 @@ glm::vec3 RayTracer::L(Ray &ray, unsigned depth)
                     if (depth >= 3 && prng.get_rand(omp_get_thread_num()) > p)
                     {
                         // L0 = intersection_record.emittance_ + 2.0f * ((float)M_PI) * (intersection_record.brdf_/p) * cos_;
+
+                        // Saporra aqui tava na equacao, mas fica zoadasso se ativar (ele basicamente tenta compensar quando não deveria
+                        // e acaba meio que transformando qualquer objeto difuso em um emissor)
+
+                        // PS: existe a mesma coisa para metal, mas nem adianta testar porque o cook torrance ta zoado
                     }
                     else
                     {
@@ -221,7 +226,7 @@ glm::vec3 RayTracer::L(Ray &ray, unsigned depth)
                 L0 = L(new_ray, ++depth);
             }
         }
-    // }
+    }
 
     return L0;
 }
